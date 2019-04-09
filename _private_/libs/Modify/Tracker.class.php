@@ -121,8 +121,52 @@
 		}
 		//--------
 		
+		//Selektywność wyboru
+		private function isNickIn($nicksArr,$nick) {
+			$b = FALSE;
+		
+			foreach($nicksArr as $na) {
+				if($nick == $na) {
+					$b = TRUE;
+					break;
+				}
+			}
+		
+			return $b;
+		}
+		
+		private function selectValid($from,$to,$nicks) {
+			
+			$b = FALSE;
+			
+			$nicksArr = explode(',',$nicks);
+			
+			$buff = '';
+			
+			foreach($this->info as $i) {
+			
+				if($from == $i['link']) {
+					$b = TRUE;
+					if($this->isNickIn($nicksArr,$i['author'])) $buffInfo[] = $i;
+					$buff = $i['link'];
+				}
+			
+				if($to == $i['link']) {
+					if($buff != $i['link'] && $this->isNickIn($nicksArr,$i['author'])) $buffInfo[] = $i;
+					$b = FALSE;
+				}
+			
+				if($b && $to != $i['link']) {
+					if($buff != $i['link'] && $this->isNickIn($nicksArr,$i['author'])) $buffInfo[] = $i;
+				}
+			}
+			
+			$this->info = $buffInfo;
+		}
+		//--------
+		
 		//Wyciąganie wszystkiego
-		public function extractAll() {
+		public function extractAll($from,$to,$nicks) {
 		
 			do {
 				
@@ -134,7 +178,9 @@
 			
 				$this->getNextPageURL();
 			
-			} while($this->url != '');	
+			} while($this->url != '');
+			
+			$this->selectValid($from,$to,$nicks);
 		}
 		//--------
 		
