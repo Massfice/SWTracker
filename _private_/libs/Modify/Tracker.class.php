@@ -26,7 +26,7 @@
 		//--------
 		
 		//Pobieranie źródła strony
-		function getSource() {
+		private function getSource() {
 			$source = file_get_contents($this->url);
 			$source =  trim(preg_replace('/[\s]+/m','',$source));
 			$source = preg_replace('/(&amp;sid=[a-zA-Z0-9]+)/m','',$source);
