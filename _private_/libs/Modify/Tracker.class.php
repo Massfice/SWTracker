@@ -96,9 +96,9 @@
 		
 		private function extractNextPageURL($m) {
 			$this->url = $m;
-			$this->url = preg_replace('/^<ahref="\./m','',$url);
-			$this->url = preg_replace('/"class="right-boxright">Następnastrona<\/a>/m','',$url);
-			$this->url = 'http://shinobi-war.xaa.pl'.$url;	
+			$this->url = preg_replace('/^<ahref="\./m','',$this->url);
+			$this->url = preg_replace('/"class="right-boxright">Następnastrona<\/a>/m','',$this->url);
+			$this->url = 'http://shinobi-war.xaa.pl'.$this->url;	
 		}
 		//--------
 		
