@@ -1,8 +1,6 @@
 <?php
-
-	require_once dirname(__DIR__, 1).'/Interfaces/DataBaseConnection.interface.php';
 	
-	class Tracker implements DataBaseConnection {
+	class Tracker implements DataBaseConnection,Validation {
 		
 		private $source;
 		private $matches;
@@ -234,9 +232,12 @@
 		
 		
 		
-		private function validate($from,$to) {
+		public function validate($params) {
 			
 			$b = FALSE;
+			
+			$from = $params[0];
+			$to = $params[1];
 			
 			if($this->checkNonEmpty($from,$to)) {
 				
@@ -272,7 +273,7 @@
 		
 		//Wyciąganie wszystkiego
 		public function extractAll($from,$to,$nicks) {
-			if($this->validate($from,$to)) {
+			if($this->validate(array($from,$to))) {
 							
 				do {
 				

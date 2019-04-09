@@ -1,6 +1,4 @@
 <?php
-
-	require_once dirname(__DIR__, 1).'/Interfaces/DataBaseConnection.interface.php';
 	
 	class Checker implements DataBaseConnection {
 		
@@ -9,7 +7,7 @@
 		
 		function __construct() {
 			session_start();
-			$this->id = isset($_SESSION['id']) ? $_SESSION['id'] : (isset($_REQUEST['u']) ? $_REQUEST['u'] : -1);
+			$this->id = isset($_SESSION['id']) ? $_SESSION['id'] : (isset($_GET['u']) ? $_GET['u'] : -1);
 
 			$this->mq = new mysqli(
 				DataBaseConnection::dbHost,
@@ -37,6 +35,8 @@
 				if(!$b) {
 					include dirname(__DIR__, 2).'/login_view.php';
 					exit();
+				} else {
+					$_SESSION['id'] = $this->id;
 				}
 			
 			}

@@ -1,31 +1,56 @@
 <?php
 	
+	require_once '_private_/libs/Interfaces/DataBaseConnection.interface.php';
+	require_once '_private_/libs/Interfaces/Validation.interface.php';
+	
 	require_once '_private_/libs/Modify/Tracker.class.php';
 	require_once '_private_/libs/Security/Checker.class.php';
+	require_once '_private_/libs/Security/Login.class.php';
 	
 	$checker = new Checker();
 	
 	$checker->execute();
 	
-	$from = isset($_POST['from']) ? $_POST['from'] : '';
+	function track(&$showInfo,&$showError) {
+		if(isset($_POST['from']) && isset($_POST['to']) && isset($_POST['nicks'])) {
+		
+			$from = $_POST['from'];
+			$to = $_POST['to'];
+			$nicks = $_POST['nicks'];
+		
+			$url = $from;
+		
+			$tracker = new Tracker($url);
+		
+			$tracker->extractAll($from,$to,$nicks);
+			$tracker->getInfo($showInfo,$showError);
+		
+		}	
+	}
 	
-	$to = isset($_POST['to']) ? $_POST['to'] : '';
+	function login() {
+		
+	}
 	
-	$nicks = isset($_POST['nicks']) ? $_POST['nicks'] : '';
+	function logout() {
+		session_destroy();
+		header('Location: http://localhost/myProjects/SWTracker');
+	}
 	
 	$showInfo = array();
 	$showError = array();
 	
-	//if($from != '' && $to != '' && $nicks != '') {
+	if(isset($_REQUEST['a'])) {
 		
-		$url = $from;
+		switch($_REQUEST['a']) {
+			
+			case 'track': track($showInfo,$showError); break;
+			case 'login': login(); break;
+			case 'logout': logout(); break;
+			
+		}
 		
-		$tracker = new Tracker($url);
-		
-		$tracker->extractAll($from,$to,$nicks);
-		$tracker->getInfo($showInfo,$showError);
-		
-	//}
+	}
 	
 	include '_private_/view.php';
 	

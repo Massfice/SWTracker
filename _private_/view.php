@@ -1,22 +1,33 @@
-<form action = '' method = 'POST'>
-Od: <input type = 'text' name = 'from'> Do: <input type = 'text' name = 'to'><br>
-Rozliczam: <input type = 'text' name = 'nicks'><br>
-<input type = 'submit' value = 'Send'>
-</form>
-
-<?php
-	if(isset($showInfo) && !empty($showInfo)) {
-		foreach($showInfo as $i) {
-			echo $i['author'].': '.'<a href="'.$i['link'].'" target="_blank">'.$i['link'].'</a><br><br>';
-		}
-	}
+<html>
+	<head>
+		<title>SW Tracker</title>
+	</head>
 	
-	if(isset($showError) && !empty($showError)) {	
+	<body>
+		<form action = '' method = 'POST'>
+			Od: <input type = 'text' name = 'from'> Do: <input type = 'text' name = 'to'><br>
+			Rozliczam: <input type = 'text' name = 'nicks'> 
+			<input type = 'submit' value = 'Proccess'>
+			<input type = 'hidden' name = 'a' value = 'track'>
+		</form>
 
-		echo '<b>### BLEDY ###</b><br><br>';
+		<?php
+			if(isset($showInfo) && !empty($showInfo)) {
+				foreach($showInfo as $i) {
+					echo $i['author'].': '.'<a href="'.$i['link'].'" target="_blank">'.$i['link'].'</a><br><br>';
+				}
+			}
+	
+			if(isset($showError) && !empty($showError)) {	
 
-		foreach($showError as $e) {
-			echo '- '.$e.'<br>';
-		}
-	}
-?>
+				echo '<b>### BLEDY ###</b><br><br>';
+
+				foreach($showError as $e) {
+					echo '- '.$e.'<br>';
+				}
+			}
+		?>
+		
+	</body>
+	
+</html>
