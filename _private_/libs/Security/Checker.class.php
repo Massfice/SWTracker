@@ -9,7 +9,7 @@
 		
 		function __construct() {
 			session_start();
-			$this->id = isset($_SESSION['id']) ? $_SESSION['id'] : (isset($_REQUEST['user']) ? $_REQUEST['user'] : -1);
+			$this->id = isset($_SESSION['id']) ? $_SESSION['id'] : (isset($_REQUEST['u']) ? $_REQUEST['u'] : -1);
 
 			$this->mq = new mysqli(
 				DataBaseConnection::dbHost,

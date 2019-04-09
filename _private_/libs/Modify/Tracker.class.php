@@ -9,6 +9,17 @@
 		private $url;
 		private $info;
 		
+		//Wzorzec
+		private const regParts = array(
+			0 => '/',
+			1 => '<pclass="author"><ahref="\.',
+			2 => '\/viewtopic\.php\?p=[0-9]+#p[0-9]+',
+			3 => '"><imgsrc="\.\/styles\/WoWWarlords\/imageset\/icon_post_target(_unread)?\.gif"width="11"height="9"alt="(Post|Nieprzeczytanypost)"title="(Post|Nieprzeczytanypost)"\/><\/a>przez<strong><ahref="\.\/memberlist\.php\?mode=viewprofile&amp;u=[0-9]+"style="color:#[[:xdigit:]]+;"class="username-coloured">',
+			4 => '[a-zA-Zū\'ō]+',
+			5 => '<\/a><\/strong>',
+			6 => '/m');
+		//--------
+		
 		private $mq;
 		
 		//Konstruktor
@@ -39,8 +50,7 @@
 		//Wyciąganie nagłówka z autorem ze źródła strony
 		private function getAuthorHeaders() {
 		
-			$re = '/<pclass="author"><ahref="\.\/viewtopic\.php\?p=[0-9]+#p[0-9]+"><imgsrc="\.\/styles\/WoWWarlords\/imageset\/icon_post_target(_unread)?\.gif"width="11"height="9"alt="(Post|Nieprzeczytanypost)"title="(Post|Nieprzeczytanypost)"\/><\/a>przez<strong><ahref="\.\/memberlist\.php\?mode=viewprofile&amp;u=[0-9]+"style="color:#[[:xdigit:]]+;"class="username-coloured">[a-zA-Zū\'ō]+<\/a><\/strong>/m';
-		
+			$re = self::regParts[0].self::regParts[1].self::regParts[2].self::regParts[3].self::regParts[4].self::regParts[5].self::regParts[6];
 			preg_match_all($re, $this->source, $this->matches, PREG_SET_ORDER, 0);
 		
 		}
@@ -49,8 +59,9 @@
 		//Wyciąganie autorów i linków
 		private function extractAuthor($m,&$author) {
 			$buff = $m;
-			$buff = preg_replace('/<pclass="author"><ahref="\.\/viewtopic\.php\?p=[0-9]+#p[0-9]+"><imgsrc="\.\/styles\/WoWWarlords\/imageset\/icon_post_target(_unread)?\.gif"width="11"height="9"alt="(Post|Nieprzeczytanypost)"title="(Post|Nieprzeczytanypost)"\/><\/a>przez<strong><ahref="\.\/memberlist\.php\?mode=viewprofile&amp;u=[0-9]+"style="color:#[[:xdigit:]]+;"class="username-coloured">/m','',$buff);
-			$buff = preg_replace('/<\/a><\/strong>/m','',$buff);
+			
+			$buff = preg_replace(self::regParts[0].self::regParts[1].self::regParts[2].self::regParts[3].self::regParts[6],'',$buff);
+			$buff = preg_replace(self::regParts[0].self::regParts[5].self::regParts[6],'',$buff);
 		
 			$author = '';
 			for($i = 0; $i < strlen($buff); $i++) {
@@ -65,8 +76,8 @@
 		
 		private function extractLink($m,&$link) {
 			$link = $m;
-			$link = preg_replace('/<pclass="author"><ahref="\./m','',$link);
-			$link = preg_replace('/"><imgsrc="\.\/styles\/WoWWarlords\/imageset\/icon_post_target(_unread)?\.gif"width="11"height="9"alt="(Post|Nieprzeczytanypost)"title="(Post|Nieprzeczytanypost)"\/><\/a>przez<strong><ahref="\.\/memberlist\.php\?mode=viewprofile&amp;u=[0-9]+"style="color:#[[:xdigit:]]+;"class="username-coloured">[a-zA-Zū\'ō]+<\/a><\/strong>/m','',$link);
+			$link = preg_replace(self::regParts[0].self::regParts[1].self::regParts[6],'',$link);
+			$link = preg_replace(self::regParts[0].self::regParts[3].self::regParts[4].self::regParts[5].self::regParts[6],'',$link);
 			$link = 'http://shinobi-war.xaa.pl'.$link;
 		}
 		//--------
