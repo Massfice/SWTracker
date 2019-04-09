@@ -14,17 +14,18 @@
 	$nicks = isset($_POST['nicks']) ? $_POST['nicks'] : '';
 	
 	$showInfo = array();
+	$showError = array();
 	
-	if($from != '' && $to != '' && $nicks != '') {
+	//if($from != '' && $to != '' && $nicks != '') {
 		
 		$url = $from;
 		
 		$tracker = new Tracker($url);
 		
 		$tracker->extractAll($from,$to,$nicks);
-		$tracker->getInfo($showInfo);
+		$tracker->getInfo($showInfo,$showError);
 		
-	}
+	//}
 	
 	include '_private_/view.php';
 	

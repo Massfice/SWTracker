@@ -8,6 +8,7 @@
 		private $matches;
 		private $url;
 		private $info;
+		private $error;
 		
 		//Wzorzec
 		private const regParts = array(
@@ -38,13 +39,20 @@
 		
 		//Pobieranie źródła strony
 		private function getSource() {
-			$source = file_get_contents($this->url);
+			
+			$this->source = $this->getSourceOnce($this->url);
+			
+		}
+		
+		private function getSourceOnce($url) {
+			$source = file_get_contents($url);
 			$source =  trim(preg_replace('/[\s]+/m','',$source));
 			$source = preg_replace('/(&amp;sid=[a-zA-Z0-9]+)/m','',$source);
 			
-			$this->source = $source;
+			return $source;
 			
 		}
+		
 		//--------
 		
 		//Wyciąganie nagłówka z autorem ze źródła strony
@@ -96,9 +104,9 @@
 		//--------
 		
 		//Wyciąganie linka do następnej strony (jeśli istnieje)
-		private function getNextPageURL() {
+		private function getNextPageURL($source,&$url) {
 		
-			$buff = $this->source;
+			$buff = $source;
 		
 			$buff = preg_replace('/amp;/m','',$buff);
 		
@@ -107,17 +115,17 @@
 			preg_match_all($re, $buff, $matches, PREG_SET_ORDER, 0);
 		
 			if(count($matches) > 0) {
-				$this->extractNextPageURL($matches[0][0]);
+				$this->extractNextPageURL($matches[0][0],$url);
 			} else {
-				$this->url = '';
+				$url = '';
 			}
 		}
 		
-		private function extractNextPageURL($m) {
-			$this->url = $m;
-			$this->url = preg_replace('/^<ahref="\./m','',$this->url);
-			$this->url = preg_replace('/"class="right-boxright">Następnastrona<\/a>/m','',$this->url);
-			$this->url = 'http://shinobi-war.xaa.pl'.$this->url;	
+		private function extractNextPageURL($m,&$url) {
+			$url = $m;
+			$url = preg_replace('/^<ahref="\./m','',$url);
+			$url = preg_replace('/"class="right-boxright">Następnastrona<\/a>/m','',$url);
+			$url = 'http://shinobi-war.xaa.pl'.$url;	
 		}
 		//--------
 		
@@ -143,6 +151,8 @@
 			
 			$buff = '';
 			
+			$buffInfo = array();
+			
 			foreach($this->info as $i) {
 			
 				if($from == $i['link']) {
@@ -165,28 +175,126 @@
 		}
 		//--------
 		
-		//Wyciąganie wszystkiego
-		public function extractAll($from,$to,$nicks) {
+		//Walidacja danych
+		private function shortLink(&$url) {
+			$url = str_replace('http://shinobi-war.xaa.pl','',$url);
+			$url = str_replace('.','\.',$url);
+			$url = str_replace('?','\?',$url);
+			$url = str_replace('/','\/',$url);
+		}
 		
+		private function checkPostOrder($from,$to) {
+			
+			$url = $from;
+			
+			$this->shortLink($from);
+			$this->shortLink($to);
+			
+			$re1 = self::regParts[0].self::regParts[1];
+			$re2 = self::regParts[3].self::regParts[4].self::regParts[5].self::regParts[6];
+			
+			$cf = FALSE;
+			$ct = FALSE;
 			do {
 				
-				$this->getSource();
 				
-				$this->getAuthorHeaders();
+				$source = $this->getSourceOnce($url);
+				
+				preg_match($re1.$from.$re2,$source,$f,PREG_OFFSET_CAPTURE);
+				preg_match($re1.$to.$re2,$source,$t,PREG_OFFSET_CAPTURE);
+				
+				
+				if(count($f) != 0 && count($t) != 0) {
+					if($f[0][1] <= $t[0][1]) {
+						$cf = TRUE;
+						$ct = TRUE;
+					}						
+				}
+				else if(count($f) != 0) {
+					$cf = TRUE;
+				} else if($cf && count($t) != 0) {
+					$ct = TRUE;
+				}
+				$this->getNextPageURL($source,$url);
+			
+			} while($url != '');
+				
+			return ($cf && $ct);	
+		}
+		
+		private function checkNonEmpty($from,$to) {
+			return ($from != '') && ($to != '');
+		}
+		
+		private function checkLinkMatchPattern($url) {
+			$re = '/^http:\/\/shinobi-war\.xaa\.pl\/viewtopic\.php\?p=[0-9]+#p[0-9]+$/m';
+			
+			return preg_match($re, $url, $matches, PREG_OFFSET_CAPTURE, 0);
+		}
+		
+		
+		
+		private function validate($from,$to) {
+			
+			$b = FALSE;
+			
+			if($this->checkNonEmpty($from,$to)) {
+				
+				$x = TRUE;
+				
+				if(!$this->checkLinkMatchPattern($from)) {
+					$this->error[] = 'Nieprawidlowy link w polu [OD]';
+					$x = FALSE;
+				}
+				
+				if(!$this->checkLinkMatchPattern($to)) {
+					$this->error[] = 'Nieprawidlowy link w polu [DO]';
+					$x = FALSE;
+				}
+				
+				if($x) {
+					
+					if($this->checkPostOrder($from,$to)) {
+						$b = TRUE;
+					} else {
+						$this->error[] = 'Zla kolejnosc linkow lub linki znajduja sie w dwoch roznych tematach';
+					}
+					
+				}
+				
+			} else {
+				$this->error[] = 'Wypelnij wszystkie pola';
+			}
+			
+			return $b;
+		}
+		//--------
+		
+		//Wyciąganie wszystkiego
+		public function extractAll($from,$to,$nicks) {
+			if($this->validate($from,$to)) {
+							
+				do {
+				
+					$this->getSource();
+				
+					$this->getAuthorHeaders();
 	
-				$this->extractInfos();
+					$this->extractInfos();
 			
-				$this->getNextPageURL();
+					$this->getNextPageURL($this->source,$this->url);
 			
-			} while($this->url != '');
+				} while($this->url != '');
 			
-			$this->selectValid($from,$to,$nicks);
+				$this->selectValid($from,$to,$nicks);
+			}
 		}
 		//--------
 		
 		//Zwracanie informacji
-		public function getInfo(&$info) {
+		public function getInfo(&$info,&$error) {
 			$info = $this->info;
+			$error = $this->error;
 		}
 		//--------
 		

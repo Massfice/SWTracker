@@ -10,4 +10,13 @@ Rozliczam: <input type = 'text' name = 'nicks'><br>
 			echo $i['author'].': '.'<a href="'.$i['link'].'" target="_blank">'.$i['link'].'</a><br><br>';
 		}
 	}
+	
+	if(isset($showError) && !empty($showError)) {	
+
+		echo '<b>### BLEDY ###</b><br><br>';
+
+		foreach($showError as $e) {
+			echo '- '.$e.'<br>';
+		}
+	}
 ?>
