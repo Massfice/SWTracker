@@ -9,10 +9,18 @@
 		private $url;
 		private $info;
 		
+		private $mq;
+		
 		//Konstruktor
 		function __construct($url) {
 			
 			$this->url = $url;
+			
+			$this->mq = new mysqli(
+				DataBaseConnection::dbHost,
+				DataBaseConnection::dbUser,
+				DataBaseConnection::dbPasswd,
+				DataBaseConnection::dbName);
 			
 		}
 		//--------
