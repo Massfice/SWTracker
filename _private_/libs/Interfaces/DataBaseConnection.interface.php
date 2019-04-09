@@ -7,7 +7,7 @@
 		const dbPasswd = '';
 		const dbName = 'swtrackerbase';
 		
-		public function execQuery();
+		public function execute();
 	}
 
 ?>

@@ -18,7 +18,7 @@
 				DataBaseConnection::dbName);
 		}
 		
-		public function execQuery() {
+		public function execute() {
 			
 			if(!$this->mq) echo 'Data Base Error :(<br><br>';
 			else {

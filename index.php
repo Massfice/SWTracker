@@ -1,6 +1,13 @@
 <?php
+	
+	require_once '_private_/libs/Modify/Tracker.class.php';
+	require_once '_private_/libs/Security/Checker.class.php';
+	
+	$checker = new Checker();
+	
+	$checker->execute();
 
-	function getSource(&$source,$url) {
+	/*function getSource(&$source,$url) {
 		$source = file_get_contents($url);
 		$source =  trim(preg_replace('/[\s]+/m','',$source));
 		$source = preg_replace('/(&amp;sid=[a-zA-Z0-9]+)/m','',$source);
@@ -84,7 +91,7 @@
 			getNextPageURL($url,$source);
 			
 		} while($url != '');	
-	}
+	}*/
 	
 	function isNickIn($nicksArr,$nick) {
 		$b = FALSE;
@@ -110,7 +117,11 @@
 	if($from != '' && $to != '' && $nicks != '') {
 		
 		$url = $from;
-		extractAll($info,$url);
+		
+		$tracker = new Tracker($url);
+		
+		$tracker->extractAll();
+		$tracker->getInfo($info);
 		
 		$b = FALSE;
 		
@@ -134,12 +145,6 @@
 			}
 		}
 	}
-	
-	require '_private_/libs/Security/Checker.class.php';
-	
-	$checker = new Checker();
-	
-	$checker->execQuery();
 	
 	include '_private_/view.php';
 	
