@@ -26,11 +26,10 @@
 			
 			$this->url = $url;
 			
-			$this->mq = new mysqli(
-				DataBaseConnection::dbHost,
-				DataBaseConnection::dbUser,
-				DataBaseConnection::dbPasswd,
-				DataBaseConnection::dbName);
+			$this->info = array();
+			$this->error = array();
+			
+			include dirname(__DIR__, 2).'/mq.php';
 			
 		}
 		//--------

@@ -9,11 +9,6 @@ RewriteRule ^_private_/.*$ index.php
 
 ####### Ładne Linki #######
 
-#Format nazwa_skryptu/parametr/wartość odpowiada nazwa_skryptu.php?paramet=wartość
-RewriteRule ^([a-z]+)/([a-zA-Z]+)/(.+)$ $1.php?$2=$3
+#index.php?action=akcja -> /akcja
 
-#Format nazwa_skryptu odpowiada nazwa_skryptu.php
-RewriteRule ^([a-z]+)$ $1.php
-
-#Format parametr/wartość odpowiada index.php?parametr=wartość
-RewriteRule ^([a-zA-Z]+)/(.+)$ index.php?$1=$2
+RewriteRule ^([a-z]+)$ index.php?action=$1

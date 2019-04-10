@@ -1,44 +1,38 @@
 <?php
 	
-	class Checker implements DataBaseConnection {
+	class Checker {
 		
-		private $id;
-		private $mq;
+		private $b;
 		
 		function __construct() {
 			session_start();
-			$this->id = isset($_SESSION['id']) ? $_SESSION['id'] : (isset($_GET['u']) ? $_GET['u'] : -1);
-
-			$this->mq = new mysqli(
-				DataBaseConnection::dbHost,
-				DataBaseConnection::dbUser,
-				DataBaseConnection::dbPasswd,
-				DataBaseConnection::dbName);
+			$this->b = isset($_SESSION['id']);
 		}
 		
-		public function execute() {
+		public function check() {
 			
-			if(!$this->mq) echo 'Data Base Error :(<br><br>';
-			else {
-				$result = $this->mq->query('select is_login_in from users where user_id='.$this->id);
-				$this->mq->close();
+			if(!$this->b) {
 				
-				$b = FALSE;
-				
-				if($result != NULL && $result->num_rows > 0) {
-					$result = $result->fetch_assoc();
-				
-					if($result['is_login_in'] == '1') $b = TRUE;
-				
+				if(isset($_POST['login']) && isset($_POST['passwd']) && isset($_POST['action']) &&
+					$_POST['action'] == 'login') {
+						
+					$id = null;
+					$error = array();
+					
+					$login = new Login($_POST['login'],$_POST['passwd']);
+					$login->validate(array($_POST['login'],$_POST['passwd']));
+					$login->execute();
+					
+					$login->getInfo($id,$error);
+					
+					$_SESSION['id'] = $id;
+					
+					if(empty($error)) header('Location: http://localhost/myProjects/SWTracker/');
+					
 				}
-			
-				if(!$b) {
-					include dirname(__DIR__, 2).'/login_view.php';
-					exit();
-				} else {
-					$_SESSION['id'] = $this->id;
-				}
-			
+				
+				include dirname(__DIR__, 2).'/login_view.php';
+				exit();
 			}
 		}
 		

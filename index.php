@@ -9,7 +9,7 @@
 	
 	$checker = new Checker();
 	
-	$checker->execute();
+	$checker->check();
 	
 	function track(&$showInfo,&$showError) {
 		if(isset($_POST['from']) && isset($_POST['to']) && isset($_POST['nicks'])) {
@@ -28,24 +28,19 @@
 		}	
 	}
 	
-	function login() {
-		
-	}
-	
 	function logout() {
 		session_destroy();
-		header('Location: http://localhost/myProjects/SWTracker');
+		header('Location: http://localhost/myProjects/SWTracker/');
 	}
 	
 	$showInfo = array();
 	$showError = array();
 	
-	if(isset($_REQUEST['a'])) {
+	if(isset($_REQUEST['action'])) {
 		
-		switch($_REQUEST['a']) {
+		switch($_REQUEST['action']) {
 			
 			case 'track': track($showInfo,$showError); break;
-			case 'login': login(); break;
 			case 'logout': logout(); break;
 			
 		}

@@ -8,7 +8,7 @@
 			Od: <input type = 'text' name = 'from'> Do: <input type = 'text' name = 'to'><br>
 			Rozliczam: <input type = 'text' name = 'nicks'> 
 			<input type = 'submit' value = 'Proccess'>
-			<input type = 'hidden' name = 'a' value = 'track'>
+			<input type = 'hidden' name = 'action' value = 'track'>
 		</form>
 
 		<?php
@@ -27,6 +27,9 @@
 				}
 			}
 		?>
+		
+		<br><br>
+		<a href = '<?php $_SERVER['SERVER_ADDR'] ?>logout'>Logout</a>
 		
 	</body>
 	
