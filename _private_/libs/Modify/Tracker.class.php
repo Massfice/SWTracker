@@ -292,8 +292,12 @@
 		//--------
 		
 		//Zwracanie informacji
-		public function getInfo(&$info,&$error) {
+		public function getInfo(&$info) {
 			$info = $this->info;
+			$error = $this->error;
+		}
+		
+		public function getErr(&$error) {
 			$error = $this->error;
 		}
 		//--------

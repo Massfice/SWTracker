@@ -3,7 +3,8 @@
 	interface Validation {
 		
 		public function validate($params);
-		public function getInfo(&$info,&$error);
+		public function getInfo(&$info);
+		public function getErr(&$error);
 		
 	}
 

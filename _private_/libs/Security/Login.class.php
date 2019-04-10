@@ -16,7 +16,7 @@
 			$this->login = $login;
 			$this->passwd = $passwd;
 			
-			$this->error = array();
+			$this->error = array('');
 			$this->id = null;
 			
 			include dirname(__DIR__, 2).'/mq.php';
@@ -52,8 +52,11 @@
 			}	
 		}
 		
-		public function getInfo(&$info,&$error) {
+		public function getInfo(&$info) {
 			$info = $this->id;
+		}
+		
+		public function getErr(&$error) {
 			$error = $this->error;
 		}
 		

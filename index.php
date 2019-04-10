@@ -23,7 +23,8 @@
 			$tracker = new Tracker($url);
 		
 			$tracker->extractAll($from,$to,$nicks);
-			$tracker->getInfo($showInfo,$showError);
+			$tracker->getInfo($showInfo);
+			$tracker->getErr($showError);
 		
 		}	
 	}
