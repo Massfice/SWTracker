@@ -12,17 +12,17 @@
 		</form>
 
 		<?php
-			if(isset($showInfo) && !empty($showInfo)) {
-				foreach($showInfo as $i) {
+			if(isset($info) && !empty($info)) {
+				foreach($info as $i) {
 					echo $i['author'].': '.'<a href="'.$i['link'].'" target="_blank">'.$i['link'].'</a><br><br>';
 				}
 			}
 	
-			if(isset($showError) && !empty($showError)) {	
+			if(isset($error) && !empty($error)) {	
 
 				echo '<b>### BLEDY ###</b><br><br>';
 
-				foreach($showError as $e) {
+				foreach($error as $e) {
 					echo '- '.$e.'<br>';
 				}
 			}

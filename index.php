@@ -11,20 +11,20 @@
 	
 	$checker->check();
 	
-	function track(&$showInfo,&$showError) {
+	function track(&$info,&$error) {
 		if(isset($_POST['from']) && isset($_POST['to']) && isset($_POST['nicks'])) {
 		
 			$from = $_POST['from'];
 			$to = $_POST['to'];
 			$nicks = $_POST['nicks'];
 		
-			$url = $from;
+			$tracker = new Tracker($from,$to,$nicks);
+			
+			$tracker->validate();
 		
-			$tracker = new Tracker($url);
-		
-			$tracker->extractAll($from,$to,$nicks);
-			$tracker->getInfo($showInfo);
-			$tracker->getErr($showError);
+			$tracker->extractAll();
+			$tracker->getInfo($info);
+			$tracker->getErr($error);
 		
 		}	
 	}
@@ -34,14 +34,14 @@
 		header('Location: http://localhost/myProjects/SWTracker/');
 	}
 	
-	$showInfo = array();
-	$showError = array();
+	$info = array();
+	$error = array();
 	
 	if(isset($_REQUEST['action'])) {
 		
 		switch($_REQUEST['action']) {
 			
-			case 'track': track($showInfo,$showError); break;
+			case 'track': track($info,$error); break;
 			case 'logout': logout(); break;
 			
 		}

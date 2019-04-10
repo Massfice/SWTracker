@@ -16,15 +16,18 @@
 			$this->login = $login;
 			$this->passwd = $passwd;
 			
-			$this->error = array('');
+			$this->error = array('Function validate() missing call');
 			$this->id = null;
 			
 			include dirname(__DIR__, 2).'/mq.php';
 		}
 		
-		public function validate($params) {
-			$login = $params[0];
-			$passwd = $params[1];
+		public function validate() {
+			
+			$this->error = array();
+			
+			$login = $this->login;
+			$passwd = $this->passwd;
 			
 			if($login == '') $this->error[] = 'Musisz podac login';
 			if($passwd == '') $this->error[] = 'Musisz podac haslo';
@@ -41,15 +44,17 @@
 		}
 		
 		public function execute() {
-			$result = 
-				$this->mq->query('select user_id from users where login ="'.$this->login.'" && passwd = "'.$this->passwd
-				.'"');
+			if(empty($this->error)) {
+				$result = 
+					$this->mq->query('select user_id from users where login ="'.$this->login.'" && passwd = "'.$this->passwd
+					.'"');
 			
-			if($result->num_rows == 1) {
-				$row = $result->fetch_assoc();
+				if($result->num_rows == 1) {
+					$row = $result->fetch_assoc();
 				
-				$this->id = $row['user_id'];
-			}	
+					$this->id = $row['user_id'];
+				}	
+			}
 		}
 		
 		public function getInfo(&$info) {

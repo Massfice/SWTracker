@@ -20,10 +20,11 @@
 					$error = array();
 					
 					$login = new Login($_POST['login'],$_POST['passwd']);
-					$login->validate(array($_POST['login'],$_POST['passwd']));
+					$login->validate();
 					$login->execute();
 					
-					$login->getInfo($id,$error);
+					$login->getInfo($id);
+					$login->getErr($error);
 					
 					$_SESSION['id'] = $id;
 					

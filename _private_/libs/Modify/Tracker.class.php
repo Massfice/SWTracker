@@ -4,7 +4,11 @@
 		
 		private $source;
 		private $matches;
-		private $url;
+		
+		private $from;
+		private $to;
+		private $nicksArr;
+		
 		private $info;
 		private $error;
 		
@@ -22,12 +26,14 @@
 		private $mq;
 		
 		//Konstruktor
-		function __construct($url) {
+		function __construct($from,$to,$nicks) {
 			
-			$this->url = $url;
+			$this->from = $from;
+			$this->to = $to;
+			$this->nicksArr = explode(',',$nicks);
 			
 			$this->info = array();
-			$this->error = array();
+			$this->error = array('Function validate() missing call');
 			
 			include dirname(__DIR__, 2).'/mq.php';
 			
@@ -37,7 +43,7 @@
 		//Pobieranie źródła strony
 		private function getSource() {
 			
-			$this->source = $this->getSourceOnce($this->url);
+			$this->source = $this->getSourceOnce($this->from);
 			
 		}
 		
@@ -127,10 +133,10 @@
 		//--------
 		
 		//Selektywność wyboru
-		private function isNickIn($nicksArr,$nick) {
+		private function isNickIn($nick) {
 			$b = FALSE;
 		
-			foreach($nicksArr as $na) {
+			foreach($this->nicksArr as $na) {
 				if($nick == $na) {
 					$b = TRUE;
 					break;
@@ -140,11 +146,9 @@
 			return $b;
 		}
 		
-		private function selectValid($from,$to,$nicks) {
+		private function selectValid() {
 			
 			$b = FALSE;
-			
-			$nicksArr = explode(',',$nicks);
 			
 			$buff = '';
 			
@@ -152,19 +156,19 @@
 			
 			foreach($this->info as $i) {
 			
-				if($from == $i['link']) {
+				if($this->from == $i['link']) {
 					$b = TRUE;
-					if($this->isNickIn($nicksArr,$i['author'])) $buffInfo[] = $i;
+					if($this->isNickIn($i['author'])) $buffInfo[] = $i;
 					$buff = $i['link'];
 				}
 			
-				if($to == $i['link']) {
-					if($buff != $i['link'] && $this->isNickIn($nicksArr,$i['author'])) $buffInfo[] = $i;
+				if($this->to == $i['link']) {
+					if($buff != $i['link'] && $this->isNickIn($i['author'])) $buffInfo[] = $i;
 					$b = FALSE;
 				}
 			
-				if($b && $to != $i['link']) {
-					if($buff != $i['link'] && $this->isNickIn($nicksArr,$i['author'])) $buffInfo[] = $i;
+				if($b && $this->to != $i['link']) {
+					if($buff != $i['link'] && $this->isNickIn($i['author'])) $buffInfo[] = $i;
 				}
 			}
 			
@@ -180,7 +184,10 @@
 			$url = str_replace('/','\/',$url);
 		}
 		
-		private function checkPostOrder($from,$to) {
+		private function checkPostOrder() {
+			
+			$from = $this->from;
+			$to = $this->to;
 			
 			$url = $from;
 			
@@ -193,7 +200,6 @@
 			$cf = FALSE;
 			$ct = FALSE;
 			do {
-				
 				
 				$source = $this->getSourceOnce($url);
 				
@@ -219,8 +225,8 @@
 			return ($cf && $ct);	
 		}
 		
-		private function checkNonEmpty($from,$to) {
-			return ($from != '') && ($to != '');
+		private function checkNonEmpty() {
+			return ($this->from != '') && ($this->to != '');
 		}
 		
 		private function checkLinkMatchPattern($url) {
@@ -231,30 +237,29 @@
 		
 		
 		
-		public function validate($params) {
+		public function validate() {
 			
 			$b = FALSE;
 			
-			$from = $params[0];
-			$to = $params[1];
+			$this->error = array();
 			
-			if($this->checkNonEmpty($from,$to)) {
+			if($this->checkNonEmpty()) {
 				
 				$x = TRUE;
 				
-				if(!$this->checkLinkMatchPattern($from)) {
+				if(!$this->checkLinkMatchPattern($this->from)) {
 					$this->error[] = 'Nieprawidlowy link w polu [OD]';
 					$x = FALSE;
 				}
 				
-				if(!$this->checkLinkMatchPattern($to)) {
+				if(!$this->checkLinkMatchPattern($this->to)) {
 					$this->error[] = 'Nieprawidlowy link w polu [DO]';
 					$x = FALSE;
 				}
 				
 				if($x) {
 					
-					if($this->checkPostOrder($from,$to)) {
+					if($this->checkPostOrder()) {
 						$b = TRUE;
 					} else {
 						$this->error[] = 'Zla kolejnosc linkow lub linki znajduja sie w dwoch roznych tematach';
@@ -271,8 +276,8 @@
 		//--------
 		
 		//Wyciąganie wszystkiego
-		public function extractAll($from,$to,$nicks) {
-			if($this->validate(array($from,$to))) {
+		public function extractAll() {
+			if(empty($this->error)) {
 							
 				do {
 				
@@ -286,7 +291,7 @@
 			
 				} while($this->url != '');
 			
-				$this->selectValid($from,$to,$nicks);
+				$this->selectValid();
 			}
 		}
 		//--------
@@ -294,7 +299,6 @@
 		//Zwracanie informacji
 		public function getInfo(&$info) {
 			$info = $this->info;
-			$error = $this->error;
 		}
 		
 		public function getErr(&$error) {
