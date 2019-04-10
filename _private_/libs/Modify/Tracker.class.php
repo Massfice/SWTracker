@@ -33,7 +33,7 @@
 			$this->nicksArr = explode(',',$nicks);
 			
 			$this->info = array();
-			$this->error = array('Function validate() missing call');
+			$this->error = array(self::vError);
 			
 			include dirname(__DIR__, 2).'/mq.php';
 			
