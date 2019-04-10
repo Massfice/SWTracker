@@ -26,7 +26,7 @@
 		private $mq;
 		
 		//Konstruktor
-		function __construct($from,$to,$nicks) {
+		public function __construct($from,$to,$nicks) {
 			
 			$this->from = $from;
 			$this->to = $to;
@@ -277,19 +277,23 @@
 		
 		//Wyciąganie wszystkiego
 		public function extractAll() {
+			
 			if(empty($this->error)) {
-							
-				do {
 				
+				$url = $this->from;
+				
+				do {
 					$this->getSource();
 				
 					$this->getAuthorHeaders();
 	
 					$this->extractInfos();
 			
-					$this->getNextPageURL($this->source,$this->url);
+					$this->getNextPageURL($this->source,$this->from);
 			
-				} while($this->url != '');
+				} while($this->from != '');
+				
+				$this->from = $url;
 			
 				$this->selectValid();
 			}

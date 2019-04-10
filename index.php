@@ -6,10 +6,16 @@
 	require_once '_private_/libs/Modify/Tracker.class.php';
 	require_once '_private_/libs/Security/Checker.class.php';
 	require_once '_private_/libs/Security/Login.class.php';
+	require_once '_private_/libs/Smarty/libs/Smarty.class.php';
+	require_once '_private_/libs/FrontController.class.php';
 	
-	$checker = new Checker();
+	$fcont = new FrontController();
 	
-	$checker->check();
+	$fcont->action();
+	
+	//$checker = new Checker();
+	
+	/*//$checker->check();
 	
 	function track(&$info,&$error) {
 		if(isset($_POST['from']) && isset($_POST['to']) && isset($_POST['nicks'])) {
@@ -48,6 +54,6 @@
 		
 	}
 	
-	include '_private_/view.php';
+	include '_private_/view.php';*/
 	
 ?>

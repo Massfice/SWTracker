@@ -4,36 +4,39 @@
 		
 		private $b;
 		
-		function __construct() {
+		private $allowed;
+		private $def;
+		
+		public function __construct() {
 			session_start();
 			$this->b = isset($_SESSION['id']);
+			
+			$this->allowed = array(
+									'register',
+									'login',
+									'default'); 
+			
 		}
 		
-		public function check() {
+		private function isNotAllowed($action) {
+			
+			$b = TRUE;
+		
+			foreach($this->allowed as $a) {
+				if($action == $a) {
+					$b = FALSE;
+					break;
+				}
+			}
+			
+			return $b;
+		}
+		
+		public function check(&$action) {
 			
 			if(!$this->b) {
 				
-				if(isset($_POST['login']) && isset($_POST['passwd']) && isset($_POST['action']) &&
-					$_POST['action'] == 'login') {
-						
-					$id = null;
-					$error = array();
-					
-					$login = new Login($_POST['login'],$_POST['passwd']);
-					$login->validate();
-					$login->execute();
-					
-					$login->getInfo($id);
-					$login->getErr($error);
-					
-					$_SESSION['id'] = $id;
-					
-					if(empty($error)) header('Location: http://localhost/myProjects/SWTracker/');
-					
-				}
-				
-				include dirname(__DIR__, 2).'/login_view.php';
-				exit();
+				if($this->isNotAllowed($action)) $action = 'login';
 			}
 		}
 		
