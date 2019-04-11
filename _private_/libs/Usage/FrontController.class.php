@@ -18,7 +18,26 @@
 			
 			$this->checker = new Checker();
 			
-			$this->tpl = null;
+			$this->tpl = array(
+									0 => array(
+													'file' => '0/main.tpl',
+													'params' => array(
+																		'name' => isset($_SESSION['name']) ? $_SESSION['name'] : null,
+																		//'b' => isset($_REQUEST['action']) ? ($_REQUEST['action'] != 'login') : TRUE
+																		'b' => TRUE
+																	)
+												),
+												
+									1 => array(
+													'file' => '0/1/default.tpl',
+													'params' => array()
+												),
+												
+									2 => array(
+													'file' => '',
+													'params' => array()
+												)
+								);
 			
 			include MQ;
 			
@@ -52,16 +71,16 @@
 				$tracker->getErr($error);
 				
 			}	
-			
-				$this->tpl = 'home.tpl';
 				
-				$this->assign('info',$info);
-				$this->assign('error',$error);
+			$this->tpl[1]['file'] = '0/1/home.tpl';
+			$this->tpl[2]['file'] = '0/1/2/track.tpl';
+			$this->tpl[2]['params']['info'] = $info;
+			$this->tpl[2]['params']['error'] = $error;
 		}
 		
 		private function login() {
 			
-			if(isset($_SESSION['id'])) header('Location: '.GARRAY['MAIN_URL'].'track');
+			if(isset($_SESSION['id'])) header('Location: '.GARRAY['MAIN_URL'].'home');
 			
 			$error = array();
 			
@@ -80,25 +99,24 @@
 					$_SESSION['id'] = $info['id'];
 				}
 					
-				if(empty($error)) header('Location: '.GARRAY['MAIN_URL'].'track');
+				if(empty($error)) header('Location: '.GARRAY['MAIN_URL'].'home');
 					
-			}		
+			}
 			
-			$this->tpl = 'login.tpl';
-			
-			$this->assign('error',$error);
+			$this->tpl[0]['params']['b'] = FALSE;
+			$this->tpl[1]['file'] = '0/1/login.tpl';
+			$this->tpl[1]['params']['error'] = $error;
 			
 		}
 		
 		private function index() {
 			
-			$this->tpl = 'index2.tpl';
-			
-			if(isset($_SESSION['name'])) $this->assign('name',$_SESSION['name']);
+			//$this->tpl = 'index2.tpl';
 		}
 		
 		private function home() {
-			//$this->tpl = 'home.tpl';
+			$this->tpl[1]['file'] = '0/1/home.tpl';
+			$this->tpl[2]['file'] = '0/1/2/default.tpl';
 		}
 		
 		private function register() {
@@ -121,11 +139,18 @@
 				
 			}
 			
-			$this->tpl = 'register.tpl';
+			//$this->tpl = 'register.tpl';
 			
-			$this->assign('error',$error);
+			//$this->assign('error',$error);
 			
-			$this->assign('info',$info);
+			//$this->assign('info',$info);
+			
+			$this->tpl[0]['params']['b'] = FALSE;
+			$this->tpl[1]['file'] = '0/1/register.tpl';
+			$this->tpl[1]['params']['error'] = $error;
+			$this->tpl[1]['params']['info'] = $info;
+			
+			
 		}
 		//--------
 		
@@ -143,25 +168,29 @@
 			$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'default';
 			
 			$this->checker->check($action);
-				
+
+			if(isset($_SESSION['name'])) $this->tpl[0]['params']['name'] = $_SESSION['name'];
+			
 			switch($action) {
 			
-				case 'track': $this->track(); break;
-				case 'login': $this->login(); break;
-				case 'logout': $this->logout(); break;
-				case 'home': $this->home(); break;
-				case 'register': $this->register(); break;
+				case 'track': $this->track(); break; //LEVEL 2
+				case 'login': $this->login(); break; //LEVEL 1
+				case 'logout': $this->logout(); break; //--
+				case 'home': $this->home(); break; //--
+				case 'register': $this->register(); break; //LEVEL 1
 				case 'default':
-				default: $this->index();
+				default: $this->index(); //LEVEL 1
 			
 			}
 				
-			if($this->tpl != null) {
+			//if($this->tpl != null) {
 				
 				$this->assignGARRAY();
 				
-				$this->display($this->tpl);
-			}
+				$this->assign('tpl',$this->tpl);
+				
+				$this->display('index.tpl');
+			//}
 		
 		}
 		//--------
