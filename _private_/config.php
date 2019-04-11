@@ -8,4 +8,8 @@
 						)
 	);
 	
+	define('MQ',ROOT.'mq.php');
+	
+	define('SMARTY', ROOT.'libs/Smarty/');
+	
 ?>

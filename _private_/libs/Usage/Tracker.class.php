@@ -1,6 +1,6 @@
 <?php
 	
-	class Tracker implements DataBaseConnection,Validation {
+	class Tracker implements Validation {
 		
 		private $source;
 		private $matches;
@@ -35,7 +35,7 @@
 			$this->info = array();
 			$this->error = array(self::vError);
 			
-			include ROOT.'mq.php';
+			include MQ;
 			
 		}
 		//--------
@@ -307,12 +307,6 @@
 		
 		public function getErr(&$error) {
 			$error = $this->error;
-		}
-		//--------
-		
-		//Zapisywanie informacji do bazy danych
-		public function execute() {
-			
 		}
 		//--------
 		

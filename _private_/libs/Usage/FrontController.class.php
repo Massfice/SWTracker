@@ -1,22 +1,26 @@
 <?php
 
-	class FrontController extends Smarty {
+	class FrontController extends Smarty implements DataBaseConnection {
 		
 		private $checker;
 		private $tpl;
+		
+		private $mq;
 		
 		//Konstruktor
 		public function __construct() {
 			
 			parent::__construct();
 			
-			$this->template_dir = ROOT.'libs/Smarty/views';
-			$this->compile_dir = ROOT.'libs/Smarty/tmp';
-			$this->cache_dir = ROOT.'libs/Smarty/cache';
+			$this->template_dir = SMARTY.'views';
+			$this->compile_dir = SMARTY.'tmp';
+			$this->cache_dir = SMARTY.'cache';
 			
 			$this->checker = new Checker();
 			
 			$this->tpl = null;
+			
+			include MQ;
 			
 		}
 		//--------
@@ -74,7 +78,6 @@
 					
 				if(!empty($info)) {
 					$_SESSION['id'] = $info['id'];
-					$_SESSION['name'] = $info['name'];
 				}
 					
 				if(empty($error)) header('Location: '.GARRAY['MAIN_URL'].'track');
@@ -89,7 +92,7 @@
 		
 		private function index() {
 			
-			$this->tpl = 'index.tpl';
+			$this->tpl = 'index2.tpl';
 			
 			if(isset($_SESSION['name'])) $this->assign('name',$_SESSION['name']);
 		}
@@ -160,6 +163,23 @@
 				$this->display($this->tpl);
 			}
 		
+		}
+		//--------
+		
+		//Wyciąganie informacji z bazy danych (dla widoku)
+		public function execute() {
+			if(isset($_SESSION['id'])) {
+				
+				$result = 
+					$this->mq->query('select login from users where user_id = '.$_SESSION['id']);
+					
+				if($result->num_rows == 1) {
+					$row = $result->fetch_assoc();
+				
+					$_SESSION['name'] = $row['login'];
+				}
+				
+			}
 		}
 		//--------
 		

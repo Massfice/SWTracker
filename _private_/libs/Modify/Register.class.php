@@ -17,7 +17,7 @@
 			$this->error = array(self::vError);
 			$info = array();
 			
-			include ROOT.'mq.php';
+			include MQ;
 		}
 		
 		public function validate() {

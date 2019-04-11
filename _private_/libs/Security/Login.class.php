@@ -19,7 +19,7 @@
 			$this->error = array(self::vError);
 			$this->id = null;
 			
-			include ROOT.'mq.php';
+			include MQ;
 		}
 		
 		public function validate() {
@@ -46,14 +46,13 @@
 		public function execute() {
 			if(empty($this->error)) {
 				$result = 
-					$this->mq->query('select user_id,login from users where login ="'.$this->login.'" && passwd = "'.$this->passwd
+					$this->mq->query('select user_id from users where login ="'.$this->login.'" && passwd = "'.$this->passwd
 					.'"');
 			
 				if($result->num_rows == 1) {
 					$row = $result->fetch_assoc();
 				
 					$this->info['id'] = $row['user_id'];
-					$this->info['name'] = $row['login'];
 				}	
 			}
 		}
