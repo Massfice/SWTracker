@@ -9,7 +9,8 @@
 		<form action = '' method = 'POST'>
 			<b>Zarejestruj sie:</b>  Login: <input type = 'text' name = 'login'> Password: <input type = 'password' name = 'passwd'> Retype Password: <input type = 'password' name = 'repasswd'> 
 			<input type = 'submit' value = 'Register'>
-			<input type = 'hidden' name = 'action' value = 'register'>
+			<input type = 'hidden' name = 'action' value = 'register'> 
+			Masz konto? <a href = '{$MAIN_URL}login'>Zaloguj sie</a>
 		</form>
 		{/if}
 		
@@ -28,7 +29,7 @@
 			{section name = 'infos' loop = $info}
 				<b>{$info[infos]}</b> <br>
 			{/section}
-			<br><a href = 'http://localhost/myProjects/SWTracker/'>Powrot do strony glownej</a>
+			<br><a href = '{$MAIN_URL}'>Powrot do strony glownej</a>
 		{/if}
 		
 	</body>

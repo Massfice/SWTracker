@@ -35,7 +35,7 @@
 			$this->info = array();
 			$this->error = array(self::vError);
 			
-			include dirname(__DIR__, 2).'/mq.php';
+			include ROOT.'mq.php';
 			
 		}
 		//--------

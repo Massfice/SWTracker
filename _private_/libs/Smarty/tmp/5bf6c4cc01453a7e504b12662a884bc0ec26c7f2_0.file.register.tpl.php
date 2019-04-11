@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-04-11 02:20:51
+/* Smarty version 3.1.33, created on 2019-04-11 16:49:38
   from 'G:\Programs\xampp\htdocs\myProjects\SWTracker\_private_\libs\Smarty\views\register.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5cae886365a840_74552375',
+  'unifunc' => 'content_5caf5402c17272_43905611',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5bf6c4cc01453a7e504b12662a884bc0ec26c7f2' => 
     array (
       0 => 'G:\\Programs\\xampp\\htdocs\\myProjects\\SWTracker\\_private_\\libs\\Smarty\\views\\register.tpl',
-      1 => 1554942046,
+      1 => 1554994175,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cae886365a840_74552375 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5caf5402c17272_43905611 (Smarty_Internal_Template $_smarty_tpl) {
 ?><html>
 	<head>
 		<title>SW Tracker - Logowanie</title>
@@ -32,7 +32,9 @@ function content_5cae886365a840_74552375 (Smarty_Internal_Template $_smarty_tpl)
 		<form action = '' method = 'POST'>
 			<b>Zarejestruj sie:</b>  Login: <input type = 'text' name = 'login'> Password: <input type = 'password' name = 'passwd'> Retype Password: <input type = 'password' name = 'repasswd'> 
 			<input type = 'submit' value = 'Register'>
-			<input type = 'hidden' name = 'action' value = 'register'>
+			<input type = 'hidden' name = 'action' value = 'register'> 
+			Masz konto? <a href = '<?php echo $_smarty_tpl->tpl_vars['MAIN_URL']->value;?>
+login'>Zaloguj sie</a>
 		</form>
 		<?php }?>
 		
@@ -71,7 +73,8 @@ for ($__section_infos_1_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_
 }
 }
 ?>
-			<br><a href = 'http://localhost/myProjects/SWTracker/'>Powrot do strony glownej</a>
+			<br><a href = '<?php echo $_smarty_tpl->tpl_vars['MAIN_URL']->value;?>
+'>Powrot do strony glownej</a>
 		<?php }?>
 		
 	</body>

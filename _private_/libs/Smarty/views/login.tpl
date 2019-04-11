@@ -7,7 +7,8 @@
 		<form action = '' method = 'POST'>
 			<b>Zaloguj sie:</b>  Login: <input type = 'text' name = 'login'> Password: <input type = 'password' name = 'passwd'> 
 			<input type = 'submit' value = 'Login'>
-			<input type = 'hidden' name = 'action' value = 'login'>
+			<input type = 'hidden' name = 'action' value = 'login'> 
+			Nie masz jeszcze konta? <a href = '{$MAIN_URL}register'>Zarejestruj sie</a>
 		</form>
 		
 		

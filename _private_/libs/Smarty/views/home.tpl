@@ -32,7 +32,7 @@
 		{/if}
 		<br>
 		<br>
-		<a href = 'http://localhost/myProjects/SWTracker/logout'>Wyloguj sie</a>
+		<a href = '{$MAIN_URL}logout'>Wyloguj sie</a>
 
 	</body>
 	

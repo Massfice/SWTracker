@@ -19,7 +19,7 @@
 			$this->error = array(self::vError);
 			$this->id = null;
 			
-			include dirname(__DIR__, 2).'/mq.php';
+			include ROOT.'mq.php';
 		}
 		
 		public function validate() {

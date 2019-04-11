@@ -4,30 +4,27 @@
 		
 		private $checker;
 		private $tpl;
-		private $params;
 		
-		private $name;
-		
+		//Konstruktor
 		public function __construct() {
 			
 			parent::__construct();
 			
-			$this->template_dir = (__DIR__).'/Smarty/views';
-			$this->compile_dir = (__DIR__).'/Smarty/tmp';
-			$this->cache_dir = (__DIR__).'/Smarty/cache';
+			$this->template_dir = ROOT.'libs/Smarty/views';
+			$this->compile_dir = ROOT.'libs/Smarty/tmp';
+			$this->cache_dir = ROOT.'libs/Smarty/cache';
 			
 			$this->checker = new Checker();
 			
 			$this->tpl = null;
-			$this->params = array();
-			
-			$this->name = null;
 			
 		}
+		//--------
 		
+		//Funkcje 'uzytkowe'
 		private function logout() {
 			session_destroy();
-			header('Location: http://localhost/myProjects/SWTracker/');
+			header('Location: '.GARRAY['MAIN_URL']);
 		}
 		
 		private function track() {
@@ -60,6 +57,8 @@
 		
 		private function login() {
 			
+			if(isset($_SESSION['id'])) header('Location: '.GARRAY['MAIN_URL'].'track');
+			
 			$error = array();
 			
 			if(isset($_POST['login']) && isset($_POST['passwd'])) {
@@ -78,7 +77,7 @@
 					$_SESSION['name'] = $info['name'];
 				}
 					
-				if(empty($error)) header('Location: http://localhost/myProjects/SWTracker/track');
+				if(empty($error)) header('Location: '.GARRAY['MAIN_URL'].'track');
 					
 			}		
 			
@@ -125,7 +124,17 @@
 			
 			$this->assign('info',$info);
 		}
+		//--------
 		
+		//Fukcja wprowadzająca dane globalne do Smarty
+		private function assignGARRAY() {
+			foreach(GARRAY as $key => $g) {
+				$this->assign($key,$g);
+			}
+		}
+		//--------
+		
+		//Fukcja wybierająca akcje
 		public function action() {
 			
 			$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'default';
@@ -144,9 +153,15 @@
 			
 			}
 				
-			if($this->tpl != null) $this->display($this->tpl);
+			if($this->tpl != null) {
+				
+				$this->assignGARRAY();
+				
+				$this->display($this->tpl);
+			}
 		
 		}
+		//--------
 		
 		
 		

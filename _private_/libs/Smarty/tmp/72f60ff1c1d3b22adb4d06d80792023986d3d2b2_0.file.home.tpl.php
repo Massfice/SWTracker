@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-04-10 22:24:57
+/* Smarty version 3.1.33, created on 2019-04-11 16:35:53
   from 'G:\Programs\xampp\htdocs\myProjects\SWTracker\_private_\libs\Smarty\views\home.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5cae511996bf46_06191428',
+  'unifunc' => 'content_5caf50c9912c26_09757331',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '72f60ff1c1d3b22adb4d06d80792023986d3d2b2' => 
     array (
       0 => 'G:\\Programs\\xampp\\htdocs\\myProjects\\SWTracker\\_private_\\libs\\Smarty\\views\\home.tpl',
-      1 => 1554927893,
+      1 => 1554993343,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cae511996bf46_06191428 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5caf50c9912c26_09757331 (Smarty_Internal_Template $_smarty_tpl) {
 ?><html>
 
 	<head>
@@ -77,7 +77,8 @@ for ($__section_infos_1_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_
 		<?php }?>
 		<br>
 		<br>
-		<a href = 'http://localhost/myProjects/SWTracker/logout'>Wyloguj sie</a>
+		<a href = '<?php echo $_smarty_tpl->tpl_vars['MAIN_URL']->value;?>
+logout'>Wyloguj sie</a>
 
 	</body>
 	
