@@ -3,10 +3,9 @@
 		<title>SW Tracker - Logowanie</title>
 	</head>
 	
-	<body>
-		<b>Zaloguj sie:</b> 
+	<body onload="">
 		<form action = '' method = 'POST'>
-			Login: <input type = 'text' name = 'login'> Password: <input type = 'password' name = 'passwd'> 
+			<b>Zaloguj sie:</b>  Login: <input type = 'text' name = 'login'> Password: <input type = 'password' name = 'passwd'> 
 			<input type = 'submit' value = 'Login'>
 			<input type = 'hidden' name = 'action' value = 'login'>
 		</form>

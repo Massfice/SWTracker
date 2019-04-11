@@ -6,6 +6,7 @@
 	require_once '_private_/libs/Modify/Tracker.class.php';
 	require_once '_private_/libs/Security/Checker.class.php';
 	require_once '_private_/libs/Security/Login.class.php';
+	require_once '_private_/libs/Modify/Register.class.php';
 	require_once '_private_/libs/Smarty/libs/Smarty.class.php';
 	require_once '_private_/libs/FrontController.class.php';
 	

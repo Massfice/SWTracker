@@ -99,6 +99,33 @@
 			//$this->tpl = 'home.tpl';
 		}
 		
+		private function register() {
+			$error = array();
+			$info = array();
+			
+			if(isset($_POST['login']) && isset($_POST['passwd']) && isset($_POST['repasswd'])) {
+				
+				$register = new Register($_POST['login'],$_POST['passwd'],$_POST['repasswd']);
+				
+				$register->execute();
+				
+				$register->validate();
+				
+				$register->execute();
+				
+				$register->getErr($error);
+				
+				$register->getInfo($info);
+				
+			}
+			
+			$this->tpl = 'register.tpl';
+			
+			$this->assign('error',$error);
+			
+			$this->assign('info',$info);
+		}
+		
 		public function action() {
 			
 			$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'default';
@@ -111,6 +138,7 @@
 				case 'login': $this->login(); break;
 				case 'logout': $this->logout(); break;
 				case 'home': $this->home(); break;
+				case 'register': $this->register(); break;
 				case 'default':
 				default: $this->index();
 			
