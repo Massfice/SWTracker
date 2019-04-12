@@ -36,7 +36,9 @@
 									2 => array(
 													'file' => '0/1/2/default_2.tpl',
 													'params' => array()
-												)
+												),
+												
+									3 => array()
 								);
 			
 			include MQ;
@@ -150,9 +152,15 @@
 		
 		private function settlement() {
 			
-			$smanager = new SettlementManager();
+			$smanager = new SettlementManager($_SESSION['settlement_id']);
 			
 			$smanager->action();
+			
+			$smanager->getInfo($info);
+			
+			$this->tpl[1]['file'] = '0/1/home.tpl';
+			$this->tpl[2]['file'] = '0/1/2/settlement.tpl';
+			$this->tpl[3]['file'] = $info['file'];
 		}
 		
 		//--------
@@ -198,8 +206,10 @@
 		
 		//Wyciąganie informacji z bazy danych (dla widoku)
 		public function execute() {
+			
+			
 			if(isset($_SESSION['id'])) {
-				
+				//Login użytkownika
 				$result = 
 					$this->mq->query('select login from users where user_id = '.$_SESSION['id']);
 					
@@ -208,6 +218,31 @@
 				
 					$_SESSION['name'] = $row['login'];
 				}
+				
+				//Bieżące rozliczenie / stworzenie nowego
+				$result = 
+					$this->mq->query('select settlement_id from settlements where user_id = '.$_SESSION['id'].'&& settled_link is NULL');
+				
+				$seid = NULL;
+				if($result->num_rows == 1) {
+					$row = $result->fetch_assoc();
+				
+					$seid = $row['settlement_id'];
+				} else {
+					
+					$this->mq->query('insert into settlements(settlement_id,user_id,settled_link) values(NULL,'.$_SESSION['id'].',NULL)');
+
+					$result = 
+						$this->mq->query('select settlement_id from settlements where user_id = '.$_SESSION['id'].'&& settled_link is NULL');
+
+					if($result->num_rows == 1) {
+						$row = $result->fetch_assoc();
+				
+						$seid = $row['settlement_id'];
+					}
+				}
+				
+				$_SESSION['settlement_id'] = $seid;
 				
 			}
 		}

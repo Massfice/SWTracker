@@ -4,4 +4,5 @@
 <br>
 <a href = '{$MAIN_URL}home'>Home</a> | 
 <a href = '{$MAIN_URL}track'>Tracker</a> | 
+<a href = '{$MAIN_URL}settlement'>Manager Rozliczen</a> |
 <a href = '{$MAIN_URL}logout'>Wyloguj sie</a>
