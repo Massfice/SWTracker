@@ -9,6 +9,9 @@ RewriteRule ^_private_/.*$ index.php
 
 ####### Ładne Linki #######
 
-#index.php?action=akcja -> /akcja
+#/settlement/akcja -> index.php?action=settlement&saction=akcja
+RewriteRule ^settlement/([a-z]+)$ index.php?action=settlement&saction=$1
+
+#/akcja -> index.php?action=akcja
 
 RewriteRule ^([a-z]+)$ index.php?action=$1

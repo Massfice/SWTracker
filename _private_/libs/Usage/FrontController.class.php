@@ -1,6 +1,6 @@
 <?php
 
-	class FrontController extends Smarty implements DataBaseConnection {
+	class FrontController extends Smarty implements DataBaseConnection,Actioner {
 		
 		private $checker;
 		private $tpl;
@@ -147,6 +147,14 @@
 			
 			
 		}
+		
+		private function settlement() {
+			
+			$smanager = new SettlementManager();
+			
+			$smanager->action();
+		}
+		
 		//--------
 		
 		//Fukcja wprowadzająca dane globalne do Smarty
@@ -173,6 +181,7 @@
 				case 'logout': $this->logout(); break; //--
 				case 'home': $this->home(); break; //--
 				case 'register': $this->register(); break; //LEVEL 1
+				case 'settlement': $this->settlement(); break;
 				case 'default':
 				default: $this->index(); //LEVEL 1
 			
