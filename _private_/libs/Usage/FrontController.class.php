@@ -118,6 +118,9 @@
 		}
 		
 		private function register() {
+			
+			if(isset($_SESSION['id'])) header('Location: '.GARRAY['MAIN_URL'].'home');
+			
 			$error = array();
 			$info = array();
 			
