@@ -20,7 +20,7 @@
 			
 			$this->tpl = array(
 									0 => array(
-													'file' => '0/main.tpl',
+													'file' => '0/default_0.tpl',
 													'params' => array(
 																		'name' => isset($_SESSION['name']) ? $_SESSION['name'] : null,
 																		//'b' => isset($_REQUEST['action']) ? ($_REQUEST['action'] != 'login') : TRUE
@@ -29,12 +29,12 @@
 												),
 												
 									1 => array(
-													'file' => '0/1/default.tpl',
+													'file' => '0/1/default_1.tpl',
 													'params' => array()
 												),
 												
 									2 => array(
-													'file' => '',
+													'file' => '0/1/2/default_2.tpl',
 													'params' => array()
 												)
 								);
@@ -111,12 +111,10 @@
 		
 		private function index() {
 			
-			//$this->tpl = 'index2.tpl';
 		}
 		
 		private function home() {
 			$this->tpl[1]['file'] = '0/1/home.tpl';
-			$this->tpl[2]['file'] = '0/1/2/default.tpl';
 		}
 		
 		private function register() {
@@ -138,12 +136,6 @@
 				$register->getInfo($info);
 				
 			}
-			
-			//$this->tpl = 'register.tpl';
-			
-			//$this->assign('error',$error);
-			
-			//$this->assign('info',$info);
 			
 			$this->tpl[0]['params']['b'] = FALSE;
 			$this->tpl[1]['file'] = '0/1/register.tpl';
@@ -183,14 +175,11 @@
 			
 			}
 				
-			//if($this->tpl != null) {
-				
 				$this->assignGARRAY();
 				
 				$this->assign('tpl',$this->tpl);
 				
 				$this->display('index.tpl');
-			//}
 		
 		}
 		//--------

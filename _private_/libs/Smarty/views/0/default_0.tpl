@@ -7,12 +7,14 @@
 		<center>
 			<b><font size="6">SW Tracker</font></b><br><br>
 			{if isset($tpl[0]['params']['name'])}
-				Zalogowany jako: <b>{$tpl[0]['params']['name']}</b><br>.
+				Zalogowany jako: <b>{$tpl[0]['params']['name']}.</b><br>
 			{else}
 				{if $tpl[0]['params']['b']}
 					{include '0/1/login.tpl'}
 				{/if}
 			{/if}
+			<a href = '{$MAIN_URL}'>Start</a> --- <a href  = '{$MAIN_URL}home'>Home</a>
+			<br>
 			-----------------------------------------------------------------------------------------------------<br>
 		
 			<br>
