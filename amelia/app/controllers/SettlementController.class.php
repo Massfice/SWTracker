@@ -22,13 +22,11 @@ class SettlementController extends Controller {
 		$proccess->putVar('id',$user['id']);
 		
 		if(!$proccess->make()) $this->container = new NewSettlementRequiredContainer();
-		else $this->container = new SettlementContainer();
+		else parent::__construct();
 		
 	}
 	
 	public function __construct() {
-		parent::__construct();
-		//if(!$this->isActiveSettlement()) $this->container = new NewSettlementRequiredContainer();
 		$this->settlementPanelView();
 	}
 	
@@ -38,7 +36,7 @@ class SettlementController extends Controller {
 		$user = SessionUtils::loadObject('user',TRUE);
 		$proccess->putVar('id',$user['id']);
 		
-		if($proccess->make()) {
+		if($proccess->make(TRUE)) {
 			$this->settlementPanelView();
 			$this->container->generateView();
 		} else App::getRouter()->redirectTo('authors');

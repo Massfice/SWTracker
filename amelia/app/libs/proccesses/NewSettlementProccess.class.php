@@ -6,10 +6,6 @@ use core\App;
 
 class NewSettlementProccess extends IsActiveSettlementProccess {
 	
-	protected function validate() {
-		return !parent::validate();
-	}
-	
 	protected function proccess() {
 		
 		App::getDB()->insert('settlements',[

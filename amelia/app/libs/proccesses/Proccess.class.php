@@ -29,9 +29,11 @@ abstract class Proccess {
 		
 	}
 	
-	final public function make() {
+	final public function make($negate = FALSE) {
 		
 		$validation = $this->validate();
+		
+		if($negate) $validation = !$validation;
 		
 		if($validation) $this->proccess();
 		

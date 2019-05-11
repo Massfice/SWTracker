@@ -22,10 +22,12 @@ Utils::addRoute('hello', 'HelloController');
 Utils::addRoute('register', 'RegisterController');
 Utils::addRoute('login', 'LoginController');
 Utils::addRoute('logout', 'HomeController');
+
 Utils::addRoute('home', 'HomeController', ['user']);
 Utils::addRoute('autologin_on', 'HomeController', ['user']);
 Utils::addRoute('autologin_off', 'HomeController', ['user']);
 Utils::addRoute('authors', 'AuthorController', ['user']);
+Utils::addRoute('new_author', 'AuthorController', ['user']);
 Utils::addRoute('positions', 'PositionController', ['user']);
 Utils::addRoute('new_settlement', 'SettlementController', ['user']);
 //Utils::addroute('echo', 'Controller');
