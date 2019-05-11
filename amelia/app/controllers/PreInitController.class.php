@@ -2,11 +2,11 @@
 
 	namespace app\controllers;
 
-	abstract class Controller extends InitController {
+	abstract class PreInitController extends InitController {
 		
 		protected $container;
 		
-		protected function pre_init() {}
+		abstract protected function pre_init();
 		protected function post_init() {}
 		
 	}

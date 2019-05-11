@@ -13,21 +13,14 @@ use app\libs\proccesses\NewSettlementProccess;
 use app\libs\containers\NewSettlementRequiredContainer;
 use app\libs\containers\SettlementContainer;
 
-class SettlementController extends Controller {
+class SettlementController extends PostInitController {
 	
-	private function settlementPanelView() {
-		
+	protected function post_init() {
 		$proccess = new IsActiveSettlementProccess();
 		$user = SessionUtils::loadObject('user',TRUE);
 		$proccess->putVar('id',$user['id']);
 		
 		if(!$proccess->make()) $this->container = new NewSettlementRequiredContainer();
-		else parent::__construct();
-		
-	}
-	
-	public function __construct() {
-		$this->settlementPanelView();
 	}
 	
 	public function action_new_settlement() {
