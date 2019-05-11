@@ -1,0 +1,1 @@
+<center><b>Witaj w Shinobi War Helper! Miłej zabawy!</b></center>

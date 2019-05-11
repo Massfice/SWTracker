@@ -42,7 +42,7 @@ class RegisterProccess extends Proccess {
 		App::getDB()->insert('users',[
 			'user_id' => NULL,
 			'login' => $this->params['login'],
-			'passwd' =>$this->params['passwd']
+			'passwd' => $this->params['passwd']
 		]);
 		
 		$func_text = 'alert(
