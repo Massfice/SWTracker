@@ -10,60 +10,68 @@
 
 	abstract class Container {
 		
-		public function generateView() {
+		private $paths;
+		private $extend_string;
+		
+		private function initialize() {
 			
 			$rc = new \ReflectionClass($this);
 			
-				$extend_string = 'extends:';
+			$this->extend_string = 'extends:';
 			
-				$names = array();
+			$names = array();
 			
-				while ($rc = $rc->getParentClass()) {
+			while ($rc = $rc->getParentClass()) {
 				
-					$class_name = $rc->getName();
-					$class_name = str_replace('app\\libs\\containers\\','',$class_name);
-					if($class_name == 'Container') break;
+				$class_name = $rc->getName();
+				$class_name = str_replace('app\\libs\\containers\\','',$class_name);
+				if($class_name == 'Container') break;
 				
-					$names[] = $class_name;
-				}
+				$names[] = $class_name;
+			}
 			
-				for($i = 0; $i < count($names); $i++) {
+			for($i = 0; $i < count($names); $i++) {
 				
-					$paths[$i] = $names[count($names) - $i - 1];
-					$extend_string = $extend_string.$i.'.tpl|';
-				}
+				$this->paths[$i] = $names[count($names) - $i - 1];
+				$this->extend_string = $this->extend_string.$i.'.tpl|';
+			}
 			
-				$extend_string = $extend_string.$i.'.tpl';
+			$rc = new \ReflectionClass($this);
+				
+			$name = $rc->getName();
+				
+			$name = str_replace('app\\libs\\containers\\','',$name);
+				
+			$this->paths[] = $name;
 			
-				if($extend_string == 'extend:0.tpl') $extend_string = '0.tpl';
+			$this->extend_string = $this->extend_string.$i.'.tpl';
 			
-				$rc = new \ReflectionClass($this);
-				
-				$name = $rc->getName();
-				
-				$name = str_replace('app\\libs\\containers\\','',$name);
-				
-				$paths[] = $name;
-				
-				//Smarty:
-				
-				App::getSmarty()->assign('user',SessionUtils::loadObject('user',TRUE));
-				
-				$cookie = isset($_SESSION['SWHelper_cookie']) ? $_SESSION['SWHelper_cookie'] : FALSE;
-				
-				App::getSmarty()->assign('autologin',$cookie);
-				
-				if(isset($_GET['mini']) && $_GET['mini'] != 'body') {
-					$extend_string = 'mini_container.tpl';
-					$paths = $_GET['mini'];
-				}
-				
-				VarySender::getInstance()->addVar('testing','test');
-				VarySender::getInstance()->send();
-				
-				App::getSmarty()->assign('paths',$paths);
+			if($this->extend_string == 'extend:0.tpl') $this->extend_string = '0.tpl';	
 			
-				App::getSmarty()->display($extend_string);
+			$mini = ParamUtils::getFromGET('mini');
+			if(isset($mini) && $mini != 'body') $this->extend_string = 'minis/'.$mini.'.tpl';				
+		}
+		
+		private function assignVars() {
+			
+			App::getSmarty()->assign('user',SessionUtils::loadObject('user',TRUE));
+				
+			$cookie = isset($_SESSION['SWHelper_cookie']) ? $_SESSION['SWHelper_cookie'] : FALSE;
+			App::getSmarty()->assign('autologin',$cookie);			
+		}
+		
+		private function render() {
+			App::getSmarty()->assign('container',$this->extend_string);
+			App::getSmarty()->assign('paths',$this->paths);
+			VarySender::getInstance()->send();
+			
+			App::getSmarty()->display('general_container.tpl');
+		}
+		
+		public function generateView() {
+			$this->initialize();
+			$this->assignVars();
+			$this->render();
 		}
 	}
 

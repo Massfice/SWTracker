@@ -1,1 +1,0 @@
-{include 'minis/'|cat:$paths|cat:'.tpl'}
