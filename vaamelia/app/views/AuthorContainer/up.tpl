@@ -1,0 +1,1 @@
+<center><b>Autorzy Postów:</b></center>
