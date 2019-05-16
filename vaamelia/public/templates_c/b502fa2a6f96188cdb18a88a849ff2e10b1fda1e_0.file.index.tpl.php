@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-05-16 19:22:03
+/* Smarty version 3.1.33, created on 2019-05-16 19:58:08
   from 'G:\Programs\xampp\htdocs\myProjects\SWTracker\vaamelia\app\views\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5cdd9c3b059465_00516585',
+  'unifunc' => 'content_5cdda4b06cf365_69270440',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b502fa2a6f96188cdb18a88a849ff2e10b1fda1e' => 
     array (
       0 => 'G:\\Programs\\xampp\\htdocs\\myProjects\\SWTracker\\vaamelia\\app\\views\\index.tpl',
-      1 => 1558027227,
+      1 => 1558029485,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cdd9c3b059465_00516585 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cdda4b06cf365_69270440 (Smarty_Internal_Template $_smarty_tpl) {
 ?><hmtl>
 
 	<head>
@@ -51,6 +51,18 @@ function content_5cdd9c3b059465_00516585 (Smarty_Internal_Template $_smarty_tpl)
 _show';
 	
 	
+	
+	function errorsClear() {
+		document.getElementById('errors').outerHTML = '';
+	}
+	
+	function register_part_show() {
+		errorsClear();
+	}
+	
+	function login_part_show() {
+		errorsClear();
+	}
 	
 	function login() {
 		if(getVar('login_successfull')) alert('Pomyślnie zalogowano.');

@@ -25,6 +25,18 @@
 	
 	{literal}
 	
+	function errorsClear() {
+		document.getElementById('errors').outerHTML = '';
+	}
+	
+	function register_part_show() {
+		errorsClear();
+	}
+	
+	function login_part_show() {
+		errorsClear();
+	}
+	
 	function login() {
 		if(getVar('login_successfull')) alert('Pomyślnie zalogowano.');
 	}
