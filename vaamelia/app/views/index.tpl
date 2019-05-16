@@ -23,8 +23,6 @@
 	var default_index;
 	var action = '{$action}_show';
 	
-	var b = false;
-	
 	{literal}
 	
 	function login() {
@@ -35,24 +33,28 @@
 		if(getVar('register_successfull')) alert('Rejestracja zakończona pomyślnie. Zostałeś/aś zalogowany/a.');
 	}
 	
-	function do_magic(response,func,element) {
-		var buff = '';
-		var i;
-		for(i = 0; i < response.length; i++) {
-		
-			setTimeout(function(i,element) {
-				buff = buff + response.charAt(i);
-				if(buff != ' ') document.getElementById(element).innerHTML = buff;
+	function do_magic(response,func,element,buff = '',i = 0,show = true) {
+		setTimeout(function(response,func,element,buff,i,show) {
+			var c = response.charAt(i);
+			buff = buff + c;
 			
-				if(i == response.length - 1) {
-					try { func(); } catch(err) {}			
-				}
-			}.bind(this,i).bind(this,element).bind(this,func), i);
-		}
+			if(c == '<') show = false;
+			if(c == '>') show = true;
+			
+			if(show) document.getElementById(element).outerHTML = buff;
+			
+			if(i == response.length - 1) {
+				try { func(); } catch(err) {}			
+			}
+			
+			i++;
+			if(i < response.length) do_magic(response,func,element,buff,i,show);
+		}.bind(this,response).bind(this,func).bind(this,element).bind(this,buff).bind(this,i).bind(this,show), 1);		
 	}
 	
 	function alwaysT() {
 		b = true;
+		return true;
 	}
 			
 	function getVar(key) {
@@ -74,7 +76,9 @@
 	
 	function exec(url,user_function,validate_function,id_element,id_form) 
 	{
-		validate_function();
+		
+		var b;
+		try { b = validate_function(); } catch(err) { b = false; }
 		
 		if(b) {
 			var formData = '';
@@ -131,13 +135,12 @@
 	
 	}
 	
-	function addRoute(index,action,element,valid,form) {
+	function addRoute(index,action,element,valid,form,mini = element) {
 		
-		var u = full_url + action + '?sid=' + sid + '&mini=' + element +'&ajax';
-		
+		var u = full_url + action + '?sid=' + sid + '&mini=' + mini +'&ajax';
 		var f = new Function(index+'()');
 		
-		v = valid ? new Function('validate_' + action + '()') : new Function('alwaysT()');
+		v = valid ? new Function('validate_' + index + '()') : new Function('return true;');
 		
 		var route = {
 			url: u,
@@ -162,7 +165,11 @@
 		addRoute('home_show','home','body',false,false);
 		addRoute('authors_show','authors','body',false,false);
 		addRoute('positions_show','positions','body',false,false);
+		
+		//Just Parts
 		addRoute('new_settlement_show','new_settlement','body',false,false);
+		addRoute('register_part_show','register','access',false,false,'register');
+		addRoute('login_part_show','login','access',false,false,'login');
 		
 		//Autologin
 		addRoute('autologin_on','autologin_on','autologin',false);

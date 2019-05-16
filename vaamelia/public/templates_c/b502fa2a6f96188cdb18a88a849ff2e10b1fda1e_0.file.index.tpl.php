@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-05-15 20:12:20
+/* Smarty version 3.1.33, created on 2019-05-16 18:21:28
   from 'G:\Programs\xampp\htdocs\myProjects\SWTracker\vaamelia\app\views\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5cdc56849c14e1_75998101',
+  'unifunc' => 'content_5cdd8e08e7e587_47923832',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b502fa2a6f96188cdb18a88a849ff2e10b1fda1e' => 
     array (
       0 => 'G:\\Programs\\xampp\\htdocs\\myProjects\\SWTracker\\vaamelia\\app\\views\\index.tpl',
-      1 => 1557943932,
+      1 => 1558023682,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cdc56849c14e1_75998101 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cdd8e08e7e587_47923832 (Smarty_Internal_Template $_smarty_tpl) {
 ?><hmtl>
 
 	<head>
@@ -50,8 +50,6 @@ function content_5cdc56849c14e1_75998101 (Smarty_Internal_Template $_smarty_tpl)
 	var action = '<?php echo $_smarty_tpl->tpl_vars['action']->value;?>
 _show';
 	
-	var b = false;
-	
 	
 	
 	function login() {
@@ -62,24 +60,28 @@ _show';
 		if(getVar('register_successfull')) alert('Rejestracja zakończona pomyślnie. Zostałeś/aś zalogowany/a.');
 	}
 	
-	function do_magic(response,func,element) {
-		var buff = '';
-		var i;
-		for(i = 0; i < response.length; i++) {
-		
-			setTimeout(function(i,element) {
-				buff = buff + response.charAt(i);
-				if(buff != ' ') document.getElementById(element).innerHTML = buff;
+	function do_magic(response,func,element,buff = '',i = 0,show = true) {
+		setTimeout(function(response,func,element,buff,i,show) {
+			var c = response.charAt(i);
+			buff = buff + c;
 			
-				if(i == response.length - 1) {
-					try { func(); } catch(err) {}			
-				}
-			}.bind(this,i).bind(this,element).bind(this,func), i);
-		}
+			if(c == '<') show = false;
+			if(c == '>') show = true;
+			
+			if(show) document.getElementById(element).outerHTML = buff;
+			
+			if(i == response.length - 1) {
+				try { func(); } catch(err) {}			
+			}
+			
+			i++;
+			if(i < response.length) do_magic(response,func,element,buff,i,show);
+		}.bind(this,response).bind(this,func).bind(this,element).bind(this,buff).bind(this,i).bind(this,show), 1);		
 	}
 	
 	function alwaysT() {
 		b = true;
+		return true;
 	}
 			
 	function getVar(key) {
@@ -101,7 +103,9 @@ _show';
 	
 	function exec(url,user_function,validate_function,id_element,id_form) 
 	{
-		validate_function();
+		
+		var b;
+		try { b = validate_function(); } catch(err) { b = false; }
 		
 		if(b) {
 			var formData = '';
@@ -158,13 +162,12 @@ _show';
 	
 	}
 	
-	function addRoute(index,action,element,valid,form) {
+	function addRoute(index,action,element,valid,form,mini = element) {
 		
-		var u = full_url + action + '?sid=' + sid + '&mini=' + element +'&ajax';
-		
+		var u = full_url + action + '?sid=' + sid + '&mini=' + mini +'&ajax';
 		var f = new Function(index+'()');
 		
-		v = valid ? new Function('validate_' + action + '()') : new Function('alwaysT()');
+		v = valid ? new Function('validate_' + index + '()') : new Function('return true;');
 		
 		var route = {
 			url: u,
@@ -189,7 +192,11 @@ _show';
 		addRoute('home_show','home','body',false,false);
 		addRoute('authors_show','authors','body',false,false);
 		addRoute('positions_show','positions','body',false,false);
+		
+		//Just Parts
 		addRoute('new_settlement_show','new_settlement','body',false,false);
+		addRoute('register_part_show','register','access',false,false,'register');
+		addRoute('login_part_show','login','access',false,false,'login');
 		
 		//Autologin
 		addRoute('autologin_on','autologin_on','autologin',false);
