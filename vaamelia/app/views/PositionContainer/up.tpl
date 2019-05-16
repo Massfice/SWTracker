@@ -1,1 +1,1 @@
-<center><b>Pozycje Rozliczenia:</b></center>
+{include 'minis/positions.tpl'}

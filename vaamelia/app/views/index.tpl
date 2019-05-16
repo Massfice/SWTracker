@@ -167,7 +167,9 @@
 		addRoute('positions_show','positions','body',false,false);
 		
 		//Just Parts
-		addRoute('new_settlement_show','new_settlement','body',false,false);
+		addRoute('new_settlement_show','new_settlement','settlement',false,false,'settlement_created');
+		addRoute('positions_part_show','positions','settlement',false,false,'positions');
+		addRoute('authors_part_show','authors','settlement',false,false,'authors');
 		addRoute('register_part_show','register','access',false,false,'register');
 		addRoute('login_part_show','login','access',false,false,'login');
 		

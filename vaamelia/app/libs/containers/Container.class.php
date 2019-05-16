@@ -12,6 +12,7 @@
 		
 		private $paths;
 		private $extend_string;
+		protected $mini_container;
 		
 		private function initialize() {
 			
@@ -48,8 +49,11 @@
 			
 			if($this->extend_string == 'extend:0.tpl') $this->extend_string = '0.tpl';	
 			
-			$mini = ParamUtils::getFromGET('mini');
-			if(isset($mini) && $mini != 'body') $this->extend_string = 'minis/'.$mini.'.tpl';				
+			$buff = ParamUtils::getFromGET('mini');
+			if(isset($this->mini_container)) $mini = $this->mini_container;
+			else $mini = $buff;
+			
+			if(isset($mini) && $buff != 'body') $this->extend_string = 'minis/'.$mini.'.tpl';				
 		}
 		
 		private function assignVars() {

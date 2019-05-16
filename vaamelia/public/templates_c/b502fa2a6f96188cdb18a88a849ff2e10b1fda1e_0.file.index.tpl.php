@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-05-16 18:21:28
+/* Smarty version 3.1.33, created on 2019-05-16 19:22:03
   from 'G:\Programs\xampp\htdocs\myProjects\SWTracker\vaamelia\app\views\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5cdd8e08e7e587_47923832',
+  'unifunc' => 'content_5cdd9c3b059465_00516585',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b502fa2a6f96188cdb18a88a849ff2e10b1fda1e' => 
     array (
       0 => 'G:\\Programs\\xampp\\htdocs\\myProjects\\SWTracker\\vaamelia\\app\\views\\index.tpl',
-      1 => 1558023682,
+      1 => 1558027227,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cdd8e08e7e587_47923832 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cdd9c3b059465_00516585 (Smarty_Internal_Template $_smarty_tpl) {
 ?><hmtl>
 
 	<head>
@@ -194,7 +194,9 @@ _show';
 		addRoute('positions_show','positions','body',false,false);
 		
 		//Just Parts
-		addRoute('new_settlement_show','new_settlement','body',false,false);
+		addRoute('new_settlement_show','new_settlement','settlement',false,false,'settlement_created');
+		addRoute('positions_part_show','positions','settlement',false,false,'positions');
+		addRoute('authors_part_show','authors','settlement',false,false,'authors');
 		addRoute('register_part_show','register','access',false,false,'register');
 		addRoute('login_part_show','login','access',false,false,'login');
 		
