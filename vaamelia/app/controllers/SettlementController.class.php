@@ -32,7 +32,7 @@ class SettlementController extends PostInitController {
 		if($proccess->make(TRUE)) {
 			$this->container = new SettlementContainer();
 			$this->container->generateView();
-		} else App::getRouter()->redirectTo('authors');
+		} else App::getRouter()->forwardTo('authors');
 	}
 	
 }
