@@ -25,7 +25,7 @@ class HomeController extends Controller {
 		$proccess = new LogoutProccess();
 		$proccess->make();
 		
-		App::getRouter()->forwardTo('login');
+		App::getRouter()->forwardTo('login_show');
 	}
 	
 	public function action_autologin_on() {
