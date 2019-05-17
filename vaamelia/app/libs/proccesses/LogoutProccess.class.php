@@ -13,7 +13,7 @@ class LogoutProccess extends NonValidationProccess {
 		$lifetime = time() - (86400 * 30);
 		
 		$proccess = new AutologinProccess();
-		$proccess->putVar('lifetime',$lifetime);
+		$proccess->param('lifetime',$lifetime,null)->setRequired(FALSE)->save();
 		$proccess->make();
 		
 		RoleUtils::removeRole('user');

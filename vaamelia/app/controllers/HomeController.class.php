@@ -19,7 +19,7 @@ class HomeController extends Controller {
 		$lifetime = time() - (86400 * 30);
 		
 		$proccess = new AutologinProccess();
-		$proccess->putVar('lifetime',$lifetime);
+		$proccess->param('lifetime',$lifetime,null)->setRequired(FALSE)->save();
 		$proccess->make();
 		
 		$proccess = new LogoutProccess();
@@ -32,7 +32,7 @@ class HomeController extends Controller {
 		$lifetime = time() + (86400 * 30);
 		
 		$proccess = new AutologinProccess();
-		$proccess->putVar('lifetime',$lifetime);
+		$proccess->param('lifetime',$lifetime,null)->setRequired(FALSE)->save();
 		$proccess->make();
 		
 		App::getRouter()->forwardTo('home');
@@ -42,7 +42,7 @@ class HomeController extends Controller {
 		$lifetime = time() - (86400 * 30);
 		
 		$proccess = new AutologinProccess();
-		$proccess->putVar('lifetime',$lifetime);
+		$proccess->param('lifetime',$lifetime,null)->setRequired(FALSE)->save();
 		$proccess->make();
 		
 		App::getRouter()->forwardTo('home');

@@ -18,7 +18,7 @@ class SettlementController extends PostInitController {
 	protected function post_init() {
 		$proccess = new IsActiveSettlementProccess();
 		$user = SessionUtils::loadObject('user',TRUE);
-		$proccess->putVar('id',$user['id']);
+		$proccess->param('id',$user['id'],null)->setRequired(FALSE)->save();
 		
 		if(!$proccess->make()) $this->container = new NewSettlementRequiredContainer();
 	}
@@ -27,7 +27,7 @@ class SettlementController extends PostInitController {
 		
 		$proccess = new NewSettlementProccess();
 		$user = SessionUtils::loadObject('user',TRUE);
-		$proccess->putVar('id',$user['id']);
+		$proccess->param('id',$user['id'],null)->setRequired(FALSE)->save();
 		
 		if($proccess->make(TRUE)) {
 			$this->container = new SettlementContainer();

@@ -53,7 +53,7 @@
 			if(c == '<') show = false;
 			if(c == '>') show = true;
 			
-			if(show) document.getElementById(element).outerHTML = buff;
+			if(show) document.getElementById(element).innerHTML = buff;
 			
 			if(i == response.length - 1) {
 				try { func(); } catch(err) {}			
@@ -171,8 +171,8 @@
 		
 		//Pages
 		addRoute('hello_show','hello','body',false,false);
-		addRoute('login_show','login','body',false,false);
-		addRoute('register_show','register','body',false,false);
+		addRoute('login_show','login_show','body',false,false);
+		addRoute('register_show','register_show','body',false,false);
 		addRoute('logout_show','logout','body',false,false);
 		addRoute('home_show','home','body',false,false);
 		addRoute('authors_show','authors','body',false,false);
@@ -182,8 +182,8 @@
 		addRoute('new_settlement_show','new_settlement','settlement',false,false,'settlement_created');
 		addRoute('positions_part_show','positions','settlement',false,false,'positions');
 		addRoute('authors_part_show','authors','settlement',false,false,'authors');
-		addRoute('register_part_show','register','access',false,false,'register');
-		addRoute('login_part_show','login','access',false,false,'login');
+		addRoute('register_part_show','register_show','access',false,false,'register');
+		addRoute('login_part_show','login_show','access',false,false,'login');
 		
 		//Autologin
 		addRoute('autologin_on','autologin_on','autologin',false);

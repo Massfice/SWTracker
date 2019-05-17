@@ -25,8 +25,9 @@ class Param {
 		return $this;
 	}
 	
-	public function setRequired() {
-		$this->paramConfig['required'] = TRUE;
+	public function setRequired($set) {
+		if($set) $this->paramConfig['required'] = TRUE;
+		else unset($this->paramConfig['required']);
 		return $this;
 	}
 	
@@ -45,28 +46,33 @@ class Param {
 		return $this;
 	}
 	
-	public function setEmail() {
-		$this->paramConfig['email'] = TRUE;
+	public function setEmail($set) {
+		if($set) $this->paramConfig['email'] = TRUE;
+		else unset($this->paramConfig['email']);
 		return $this;
 	}
 	
-	public function setUrl() {
-		$this->paramConfig['url'] = TRUE;
+	public function setUrl($set) {
+		if($set) $this->paramConfig['url'] = TRUE;
+		else unset($this->paramConfig['url']);
 		return $this;
 	}
 	
-	public function setNumeric() {
-		$this->paramConfig['numeric'] = TRUE;
+	public function setNumeric($set) {
+		if($set) $this->paramConfig['numeric'] = TRUE;
+		else unset($this->paramConfig['numeric']);
 		return $this;
 	}
 	
-	public function setInt() {
-		$this->paramConfig['int'] = TRUE;
+	public function setInt($set) {
+		if($set) $this->paramConfig['int'] = TRUE;
+		else unset($this->paramConfig['int']);
 		return $this;
 	}
 	
-	public function setFloat() {
-		$this->paramConfig['float'] = TRUE;
+	public function setFloat($set) {
+		if($set) $this->paramConfig['float'] = TRUE;
+		else unset($this->paramConfig['float']);
 		return $this;
 	}
 	
@@ -97,9 +103,9 @@ class Param {
 	}
 	
 	public function __construct($name,$source,$proccess,$key) {
-		$this->$key = $key;
+		$this->key = $key;
 		$this->proccess = $proccess;
-		$this->source = \strtoupper($source);
+		$this->source = $source;
 		$this->name = $name;
 		
 		$this->setDefault();

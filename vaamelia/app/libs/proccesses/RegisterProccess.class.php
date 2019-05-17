@@ -50,8 +50,8 @@ class RegisterProccess extends Proccess {
 		
 		$proccess = new LoginProccess();
 		
-		$proccess->putVar('login',$this->params['login']);
-		$proccess->putVar('passwd',$this->params['passwd']);
+		$proccess->param('login',$this->params['login'],null)->save();
+		$proccess->param('passwd',$this->params['passwd'],null)->save();
 		
 		$proccess->make();
 		

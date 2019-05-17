@@ -33,8 +33,8 @@ abstract class Proccess {
 		
 	}
 	
-	final public function param($name,$source,$key) {
-		if(!isset($key)) $key = $name;
+	final public function param($name,$source,$key = '') {
+		if($key =='') $key = $name;
 		if(!isset($this->unsaved_param)) {
 			$this->unsaved_param = new Param($name,$source,$this,$key);
 			return $this->unsaved_param;
@@ -44,23 +44,24 @@ abstract class Proccess {
 	}
 	
 	final public function saveParam($param) {
-		
 		if(!isset($this->params[$param->name])) {
 			
 			$method = 'validate';
-			
+			$buff = $method;
 			$key = $param->key;
 			
+			$str = \strtoupper($param->source);
 			$re = '/^(CLEANURL|REQUEST|GET|POST|COOKIES)$/m';
-			if(\preg_match($re, $param->source)) $method = $method.'From'.$param->source;
-			else $key = $param->source;
+			if(\preg_match($re, $str)) {
+				$buff.='From';
+				$buff.=$str;
+				$method = $buff;
 				
+			}
+			else $key = $param->source;
 			$v = new Validator();
 			
 			$this->params[$param->name] = $v->$method($key,$param->paramConfig);
-			
-			if(isset($this->params['id'])) echo $this->params[$param->name];
-			else 'Nie istnieje';
 			
 			unset($this->unsaved_param);
 			

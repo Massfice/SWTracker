@@ -9,6 +9,10 @@ use app\libs\proccesses\RegisterProccess;
 
 class RegisterController extends AccessController {
 	
+	public function action_register_show() {
+		$this->container->generateView();
+	}
+	
 	public function action_register() {
 		
 		$login = ParamUtils::getFromPOST('login');

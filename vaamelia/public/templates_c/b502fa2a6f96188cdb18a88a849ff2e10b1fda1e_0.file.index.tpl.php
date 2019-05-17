@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-05-16 19:58:08
+/* Smarty version 3.1.33, created on 2019-05-17 22:40:31
   from 'G:\Programs\xampp\htdocs\myProjects\SWTracker\vaamelia\app\views\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5cdda4b06cf365_69270440',
+  'unifunc' => 'content_5cdf1c3f82f782_32436714',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b502fa2a6f96188cdb18a88a849ff2e10b1fda1e' => 
     array (
       0 => 'G:\\Programs\\xampp\\htdocs\\myProjects\\SWTracker\\vaamelia\\app\\views\\index.tpl',
-      1 => 1558029485,
+      1 => 1558125626,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cdda4b06cf365_69270440 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cdf1c3f82f782_32436714 (Smarty_Internal_Template $_smarty_tpl) {
 ?><hmtl>
 
 	<head>
@@ -80,7 +80,7 @@ _show';
 			if(c == '<') show = false;
 			if(c == '>') show = true;
 			
-			if(show) document.getElementById(element).outerHTML = buff;
+			if(show) document.getElementById(element).innerHTML = buff;
 			
 			if(i == response.length - 1) {
 				try { func(); } catch(err) {}			
@@ -198,8 +198,8 @@ _show';
 		
 		//Pages
 		addRoute('hello_show','hello','body',false,false);
-		addRoute('login_show','login','body',false,false);
-		addRoute('register_show','register','body',false,false);
+		addRoute('login_show','login_show','body',false,false);
+		addRoute('register_show','register_show','body',false,false);
 		addRoute('logout_show','logout','body',false,false);
 		addRoute('home_show','home','body',false,false);
 		addRoute('authors_show','authors','body',false,false);
@@ -209,8 +209,8 @@ _show';
 		addRoute('new_settlement_show','new_settlement','settlement',false,false,'settlement_created');
 		addRoute('positions_part_show','positions','settlement',false,false,'positions');
 		addRoute('authors_part_show','authors','settlement',false,false,'authors');
-		addRoute('register_part_show','register','access',false,false,'register');
-		addRoute('login_part_show','login','access',false,false,'login');
+		addRoute('register_part_show','register_show','access',false,false,'register');
+		addRoute('login_part_show','login_show','access',false,false,'login');
 		
 		//Autologin
 		addRoute('autologin_on','autologin_on','autologin',false);
