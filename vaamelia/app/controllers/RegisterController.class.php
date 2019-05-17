@@ -14,16 +14,12 @@ class RegisterController extends AccessController {
 	}
 	
 	public function action_register() {
-		
-		$login = ParamUtils::getFromPOST('login');
-		$passwd = ParamUtils::getFromPOST('passwd');
-		$repasswd = ParamUtils::getFromPOST('repasswd');
 
 		$proccess = new RegisterProccess();
 		
-		$proccess->putVar('login',$login);
-		$proccess->putVar('passwd',$passwd);
-		$proccess->putVar('repasswd',$repasswd);
+		$proccess->param('login','post')->setRequiredMessage('Musisz podać login.')->save();
+		$proccess->param('passwd','post')->setRequiredMessage('Musisz podać hasło.')->save();
+		$proccess->param('repasswd','post')->setRequiredMessage('Musisz powtórzyć hasło.')->save();
 		
 		$proccess->make();
 		

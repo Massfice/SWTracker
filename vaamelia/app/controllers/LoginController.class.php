@@ -19,8 +19,6 @@ class LoginController extends AccessController {
 		
 		$proccess = new LoginProccess();
 		
-		$v = new Validator;
-		
 		$proccess->param('login','post')->setRequiredMessage('Musisz podać login.')->save();
 		$proccess->param('passwd','post')->setRequiredMessage('Musisz podać hasło.')->save();
 		

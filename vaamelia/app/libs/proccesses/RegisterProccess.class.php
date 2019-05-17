@@ -18,10 +18,6 @@ class RegisterProccess extends Proccess {
 		$passwd = $this->params['passwd'];
 		$repasswd = $this->params['repasswd'];
 			
-		if($login == '') Utils::addErrorMessage('Musisz podać login.');
-		if($passwd == '') Utils::addErrorMessage('Musisz podać hasło.');
-		if($repasswd == '') Utils::addErrorMessage('Musisz powtórzyć hasło.');
-			
 		if(!App::getMessages()->isError()) {
 			
 			$i = App::getDB()->count('users',[
