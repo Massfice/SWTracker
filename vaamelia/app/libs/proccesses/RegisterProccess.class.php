@@ -41,9 +41,6 @@ class RegisterProccess extends Proccess {
 			'passwd' => $this->params['passwd']
 		]);
 		
-		
-		VarySender::getInstance()->addVar('register_successfull',TRUE);
-		
 		$proccess = new LoginProccess();
 		
 		$proccess->param('login',$this->params['login'],null)->save();

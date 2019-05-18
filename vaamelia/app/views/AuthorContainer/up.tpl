@@ -1,1 +1,1 @@
-{include 'minis/authors.tpl'}
+<center><b>Autorzy Postów:</b></center>

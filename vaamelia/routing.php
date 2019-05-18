@@ -4,7 +4,7 @@ use core\App;
 use core\Utils;
 
 App::getRouter()->setDefaultRoute('hello'); #default action
-App::getRouter()->setLoginRoute('login'); #action to forward if no permissions
+App::getRouter()->setLoginRoute('login_show'); #action to forward if no permissions
 
 Utils::addRoute('hello', 'HelloController');
 Utils::addRoute('register', 'RegisterController');

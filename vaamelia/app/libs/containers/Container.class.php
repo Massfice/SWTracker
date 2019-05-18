@@ -12,48 +12,78 @@
 		
 		private $paths;
 		private $extend_string;
+		private $ajax_info;
+		
+		public static $enable_mini = TRUE;
+		
 		protected $mini_container;
 		
-		private function initialize() {
+		private function getHierarchy($class) {
 			
-			$rc = new \ReflectionClass($this);
+			$rc = new \ReflectionClass($class);
 			
-			$this->extend_string = 'extends:';
+			$my_name = $rc->getName();
 			
-			$names = array();
+			$my_name = str_replace('app\\libs\\containers\\','',$my_name);
+			
+			$names[] = $my_name;
 			
 			while ($rc = $rc->getParentClass()) {
 				
 				$class_name = $rc->getName();
 				$class_name = str_replace('app\\libs\\containers\\','',$class_name);
 				if($class_name == 'Container') break;
-				
 				$names[] = $class_name;
 			}
 			
-			for($i = 0; $i < count($names); $i++) {
+			return $names;
+		}
+		
+		private function getNewId($n1,$n2) {
+			
+			if(count($n1) > count($n2)) $array = $n1;
+			else if(count($n2) > count($n1)) $array = $n2;
+			else $array = $n1;
 				
-				$this->paths[$i] = $names[count($names) - $i - 1];
-				$this->extend_string = $this->extend_string.$i.'.tpl|';
+			for($i = 0; $i < count($array); $i++) {
+				if((isset($n1[$i]) && isset($n2[$i]) && $n1[$i] != $n2[$i]) || !isset($n1[$i]) || !isset($n2[$i]))
+					return $i;
 			}
 			
+			return -1;
+		}
+		
+		private function initialize() {
+			
 			$rc = new \ReflectionClass($this);
-				
-			$name = $rc->getName();
-				
-			$name = str_replace('app\\libs\\containers\\','',$name);
-				
-			$this->paths[] = $name;
+			$my_name = $rc->getName();
 			
-			$this->extend_string = $this->extend_string.$i.'.tpl';
+			$n1 = $this->getHierarchy($this);
+			$prev = SessionUtils::load('prev');
+			$n2 = $this->getHierarchy($prev);
 			
-			if($this->extend_string == 'extend:0.tpl') $this->extend_string = '0.tpl';	
+			$n1 = \array_reverse($n1, FALSE);
+			$n2 = \array_reverse($n2, FALSE);
+			
+			$id = $this->getNewId($n1,$n2);
+			
+			if($id == -1) $id = count($n1);
+			
+			for($i = $id; $i < count($n1); $i++) {
+				$this->paths[$i] = $n1[$i];
+			}
+			
+			$this->extend_string = $id.'.tpl';
+			$this->ajax_info = $id;
+			SessionUtils::store('prev',$my_name);
 			
 			$buff = ParamUtils::getFromGET('mini');
-			if(isset($this->mini_container)) $mini = $this->mini_container;
-			else $mini = $buff;
+			$mini = $buff;
 			
-			if(isset($mini) && $buff != 'body') $this->extend_string = 'minis/'.$mini.'.tpl';				
+			if(self::$enable_mini && isset($mini) && $buff != 'body') {
+				$this->extend_string = 'minis/'.$mini.'.tpl';
+				$this->ajax_info = 4;
+			}
 		}
 		
 		private function assignVars() {
@@ -67,6 +97,7 @@
 		private function render() {
 			App::getSmarty()->assign('container',$this->extend_string);
 			App::getSmarty()->assign('paths',$this->paths);
+			App::getSmarty()->assign('ajax_info',$this->ajax_info);
 			VarySender::getInstance()->send();
 			
 			App::getSmarty()->display('general_container.tpl');

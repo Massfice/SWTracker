@@ -77,6 +77,8 @@ App::getSmarty()->assign('full_url',$full_url);
 
 if(!(isset($_GET['ajax']) && !(bool)$_GET['ajax'])) {
 	
+	SessionUtils::store('prev','app\\libs\\containers\\ThreeTemplateContainer');
+	
 	$action = ParamUtils::getFromCleanURL(0);
 	
 	//Ładowanie widkou

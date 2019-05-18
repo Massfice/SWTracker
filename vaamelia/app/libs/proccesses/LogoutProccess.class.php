@@ -6,6 +6,8 @@ use core\RoleUtils;
 use core\App;
 use core\SessionUtils;
 
+use app\libs\usage\VarySender;
+
 class LogoutProccess extends NonValidationProccess {
 	
 	protected function proccess() {
@@ -18,6 +20,8 @@ class LogoutProccess extends NonValidationProccess {
 		
 		RoleUtils::removeRole('user');
 		SessionUtils::remove('user');
+		
+		VarySender::getInstance()->addVar('successfull',TRUE);
 	}
 	
 }

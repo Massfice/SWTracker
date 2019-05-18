@@ -9,6 +9,7 @@ use core\SessionUtils;
 
 use app\libs\usage\ExtendedConfig;
 use app\libs\usage\VarySender;
+use app\libs\containers\Container;
 
 class LoginProccess extends Proccess {
 	
@@ -51,7 +52,11 @@ class LoginProccess extends Proccess {
 		
 		SessionUtils::storeObject('user',$user);
 		
-		VarySender::getInstance()->addVar('login_successfull',TRUE);
+		VarySender::getInstance()->addVar('successfull',TRUE);
+		VarySender::getInstance()->addVar('user_id',$user['id']);
+		VarySender::getInstance()->addVar('user_name',$user['name']);
+		
+		Container::$enable_mini = FALSE;
 		
 		App::getRouter()->forwardTo('home');
 	}

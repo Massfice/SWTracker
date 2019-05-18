@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-05-17 22:40:31
+/* Smarty version 3.1.33, created on 2019-05-18 22:55:09
   from 'G:\Programs\xampp\htdocs\myProjects\SWTracker\vaamelia\app\views\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5cdf1c3f82f782_32436714',
+  'unifunc' => 'content_5ce0712d1d72e4_85475602',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b502fa2a6f96188cdb18a88a849ff2e10b1fda1e' => 
     array (
       0 => 'G:\\Programs\\xampp\\htdocs\\myProjects\\SWTracker\\vaamelia\\app\\views\\index.tpl',
-      1 => 1558125626,
+      1 => 1558212903,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cdf1c3f82f782_32436714 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ce0712d1d72e4_85475602 (Smarty_Internal_Template $_smarty_tpl) {
 ?><hmtl>
 
 	<head>
@@ -30,7 +30,7 @@ function content_5cdf1c3f82f782_32436714 (Smarty_Internal_Template $_smarty_tpl)
 	</head>
 	
 	<body onload = 'initialize()'>
-		<x id = 'body'>
+		<x id = '0'>
 		
 		
 		
@@ -52,24 +52,41 @@ _show';
 	
 	
 	
-	function errorsClear() {
-		document.getElementById('errors').outerHTML = '';
-	}
-	
-	function register_part_show() {
-		errorsClear();
-	}
-	
-	function login_part_show() {
-		errorsClear();
+	function user_refresh() {
+		var user_name = getVar('user_name');
+		var user_id = getVar('user_id');
+		
+		if(user_name && user_id) {
+			var user_text = '<b>Zalogowany/a jako: ' + user_name + '</b> (ID: ' + user_id + ')<br><br>';
+			document.getElementById('user_info').innerHTML = user_text;
+		}
+		
+		document.getElementById('user_link').innerHTML = 
+			'<a href = \'javascript:void(0);\' onclick =\'go("home_show")\'>Panel Użytkownika</a>';
 	}
 	
 	function login() {
-		if(getVar('login_successfull')) alert('Pomyślnie zalogowano.');
+		if(getVar('successfull')) {
+			user_refresh()
+			alert('Pomyślnie zalogowano.');
+		}
 	}
 	
 	function register() {
-		if(getVar('register_successfull')) alert('Rejestracja zakończona pomyślnie. Zostałeś/aś zalogowany/a.');
+		if(getVar('successfull')) {
+			user_refresh()
+			alert('Rejestracja zakończona pomyślnie. Zostałeś/aś zalogowany/a.');
+		}
+	}
+	
+	function logout() {
+		if(getVar('successfull')) {
+			document.getElementById('user_info').innerHTML = '';
+			document.getElementById('user_link').innerHTML = 
+				'<a href =\'javascript:void(0);\' onclick =\'go("login_show")\'>Wejdź</a>';
+				
+			alert('Pomyślnie wylogowano.');
+		}		
 	}
 	
 	function do_magic(response,func,element,buff = '',i = 0,show = true) {
@@ -133,7 +150,14 @@ _show';
 					
 					//try { user_function(); } catch(err) {}
 					
-					if(id_element) do_magic(xmlHttp.responseText,user_function,id_element);
+					var response = xmlHttp.responseText;
+					var id = response.charAt(0);
+					
+					if(id != '4') id_element = id;
+					
+					response = response.substr(1);
+					
+					if(id_element) do_magic(response,user_function,id_element);
 				}
 			}
 			xmlHttp.open("POST", url, true); 
@@ -200,27 +224,25 @@ _show';
 		addRoute('hello_show','hello','body',false,false);
 		addRoute('login_show','login_show','body',false,false);
 		addRoute('register_show','register_show','body',false,false);
-		addRoute('logout_show','logout','body',false,false);
 		addRoute('home_show','home','body',false,false);
 		addRoute('authors_show','authors','body',false,false);
 		addRoute('positions_show','positions','body',false,false);
 		
 		//Just Parts
-		addRoute('new_settlement_show','new_settlement','settlement',false,false,'settlement_created');
-		addRoute('positions_part_show','positions','settlement',false,false,'positions');
-		addRoute('authors_part_show','authors','settlement',false,false,'authors');
-		addRoute('register_part_show','register_show','access',false,false,'register');
-		addRoute('login_part_show','login_show','access',false,false,'login');
+		addRoute('new_settlement_show','new_settlement','settlement_created',false,false);
 		
 		//Autologin
 		addRoute('autologin_on','autologin_on','autologin',false);
 		addRoute('autologin_off','autologin_off','autologin',false);
 		
 		//Register
-		addRoute('register','register','body',false,'register_form');
+		addRoute('register','register','errors',false,'register_form');
 		
 		//Login
-		addRoute('login','login','body',false,'login_form');
+		addRoute('login','login','errors',false,'login_form');
+		
+		//Logout
+		addRoute('logout','logout','body',false,false);
 		
 	}
 	

@@ -1,7 +1,5 @@
-{block name = 2}
-	
-	{include $paths[3]|cat:'/up.tpl'}
-	<br><br><br><br>
-	{include $paths[3]|cat:'/down.tpl'}
-		
-{/block}
+{if isset($paths[3])}{include $paths[3]|cat:'/up.tpl'}{/if}
+<br><br>
+<br><br>
+<br><br>
+{if isset($paths[3])}{include $paths[3]|cat:'/down.tpl'}{/if}
