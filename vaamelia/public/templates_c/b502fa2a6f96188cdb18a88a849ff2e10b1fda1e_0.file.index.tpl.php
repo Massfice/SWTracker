@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-05-24 18:20:41
+/* Smarty version 3.1.33, created on 2019-05-24 19:16:13
   from 'G:\Programs\xampp\htdocs\myProjects\SWTracker\vaamelia\app\views\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5ce819d97b0f57_48371916',
+  'unifunc' => 'content_5ce826dd0a0e81_63131475',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b502fa2a6f96188cdb18a88a849ff2e10b1fda1e' => 
     array (
       0 => 'G:\\Programs\\xampp\\htdocs\\myProjects\\SWTracker\\vaamelia\\app\\views\\index.tpl',
-      1 => 1558714838,
+      1 => 1558718170,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ce819d97b0f57_48371916 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ce826dd0a0e81_63131475 (Smarty_Internal_Template $_smarty_tpl) {
 ?><hmtl>
 
 	<head>
@@ -197,31 +197,49 @@ _show';
 	
 	}
 	
-	function addRoute(index,action,element,valid,form,mini = element) {
+	function Route(name,action,element,valid,form,mini = element) {
 		
 		//var u = full_url + action + '?sid=' + sid + '&mini=' + mini +'&ajax';
 		//var f = new Function(index+'()');
 		
-		this.user_function = new Function(index+'()');
-		this.validate_function = valid ? new Function('validate_' + index + '()') : new Function('return true;');
-		this.element = element;
-		this.form = form;
-		this.mini = mini;
+		this.user_function = new Function(name+'()'); // no
+		this.validate_function = valid ? new Function('validate_' + name + '()') : new Function('return true;'); //no
+		this.id_element = element; //no
+		this.id_form = form; //no
+		this.mini = mini; 
 		this.action = action;
+		this.name = name;
+		//this.url = '';
 		
-		this.url = full_url + this.action + '?sid=' + sid + '&mini=' + this.mini +'&ajax';
+		//this.url = full_url + this.action + '?sid=' + sid + '&mini=' + this.mini +'&ajax';
 		
 		//v = valid ? new Function('validate_' + index + '()') : new Function('return true;');
 		
-		var route = {
+		/*var route = {
 			url: this.url, //u
 			user_function: this.user_function, //f
 			validate_function: this.validate_function, //v
 			id_element: this.element, //element
-			id_form: this.form //form
-		};
+			id_form: this.form, //form
+			action: this.action,
+			mini: this.mini,
+			name: this.name
+		};*/
 		
-		routes[index] = route;
+		this.save = function() {
+			this.url = full_url + this.action + '?sid=' + sid + '&mini=' + this.mini +'&ajax';
+			/*var route = {
+				url: this.url, //u
+				user_function: this.user_function, //f
+				validate_function: this.validate_function, //v
+				id_element: this.element, //element
+				id_form: this.form, //form
+				action: this.action,
+				mini: this.mini,
+				name: this.name
+			};*/
+			routes[this.name] = this;
+		}
 	}
 	
 	function routing() {
@@ -229,28 +247,28 @@ _show';
 		default_index = 'hello_show';
 		
 		//Pages
-		addRoute('hello_show','hello','body',false,false);
-		addRoute('login_show','login_show','body',false,false);
-		addRoute('register_show','register_show','body',false,false);
-		addRoute('home_show','home','body',false,false);
-		addRoute('authors_show','authors','body',false,false);
-		addRoute('positions_show','positions','body',false,false);
+		new Route('hello_show','hello','body',false,false).save();
+		new Route('login_show','login_show','body',false,false).save();
+		new Route('register_show','register_show','body',false,false).save();
+		new Route('home_show','home','body',false,false).save();
+		new Route('authors_show','authors','body',false,false).save();
+		new Route('positions_show','positions','body',false,false).save();
 		
 		//Just Parts
-		addRoute('new_settlement_show','new_settlement','settlement_created',false,false);
+		new Route('new_settlement_show','new_settlement','settlement_created',false,false).save();
 		
 		//Autologin
-		addRoute('autologin_on','autologin_on','autologin',false);
-		addRoute('autologin_off','autologin_off','autologin',false);
+		new Route('autologin_on','autologin_on','autologin',false).save();
+		new Route('autologin_off','autologin_off','autologin',false).save();
 		
 		//Register
-		addRoute('register','register','errors',false,'register_form');
+		new Route('register','register','errors',false,'register_form').save();
 		
 		//Login
-		addRoute('login','login','errors',false,'login_form');
+		new Route('login','login','errors',false,'login_form').save();
 		
 		//Logout
-		addRoute('logout','logout','body',false,false);
+		new Route('logout','logout','body',false,false).save();
 		
 	}
 	

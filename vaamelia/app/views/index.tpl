@@ -170,31 +170,48 @@
 	
 	}
 	
-	function addRoute(index,action,element,valid,form,mini = element) {
+	function Route(name,action,element,valid,form,mini = element) {
 		
 		//var u = full_url + action + '?sid=' + sid + '&mini=' + mini +'&ajax';
 		//var f = new Function(index+'()');
 		
-		this.user_function = new Function(index+'()');
-		this.validate_function = valid ? new Function('validate_' + index + '()') : new Function('return true;');
-		this.element = element;
-		this.form = form;
-		this.mini = mini;
+		this.user_function = new Function(name+'()'); // no
+		this.validate_function = valid ? new Function('validate_' + name + '()') : new Function('return true;'); //no
+		this.id_element = element; //no
+		this.id_form = form; //no
+		this.mini = mini; 
 		this.action = action;
+		this.name = name;
 		
-		this.url = full_url + this.action + '?sid=' + sid + '&mini=' + this.mini +'&ajax';
+		//this.url = full_url + this.action + '?sid=' + sid + '&mini=' + this.mini +'&ajax';
 		
 		//v = valid ? new Function('validate_' + index + '()') : new Function('return true;');
 		
-		var route = {
+		/*var route = {
 			url: this.url, //u
 			user_function: this.user_function, //f
 			validate_function: this.validate_function, //v
 			id_element: this.element, //element
-			id_form: this.form //form
-		};
+			id_form: this.form, //form
+			action: this.action,
+			mini: this.mini,
+			name: this.name
+		};*/
 		
-		routes[index] = route;
+		this.save = function() {
+			this.url = full_url + this.action + '?sid=' + sid + '&mini=' + this.mini +'&ajax';
+			/*var route = {
+				url: this.url, //u
+				user_function: this.user_function, //f
+				validate_function: this.validate_function, //v
+				id_element: this.element, //element
+				id_form: this.form, //form
+				action: this.action,
+				mini: this.mini,
+				name: this.name
+			};*/
+			routes[this.name] = this;
+		}
 	}
 	
 	function routing() {
@@ -202,28 +219,28 @@
 		default_index = 'hello_show';
 		
 		//Pages
-		addRoute('hello_show','hello','body',false,false);
-		addRoute('login_show','login_show','body',false,false);
-		addRoute('register_show','register_show','body',false,false);
-		addRoute('home_show','home','body',false,false);
-		addRoute('authors_show','authors','body',false,false);
-		addRoute('positions_show','positions','body',false,false);
+		new Route('hello_show','hello','body',false,false).save();
+		new Route('login_show','login_show','body',false,false).save();
+		new Route('register_show','register_show','body',false,false).save();
+		new Route('home_show','home','body',false,false).save();
+		new Route('authors_show','authors','body',false,false).save();
+		new Route('positions_show','positions','body',false,false).save();
 		
 		//Just Parts
-		addRoute('new_settlement_show','new_settlement','settlement_created',false,false);
+		new Route('new_settlement_show','new_settlement','settlement_created',false,false).save();
 		
 		//Autologin
-		addRoute('autologin_on','autologin_on','autologin',false);
-		addRoute('autologin_off','autologin_off','autologin',false);
+		new Route('autologin_on','autologin_on','autologin',false).save();
+		new Route('autologin_off','autologin_off','autologin',false).save();
 		
 		//Register
-		addRoute('register','register','errors',false,'register_form');
+		new Route('register','register','errors',false,'register_form').save();
 		
 		//Login
-		addRoute('login','login','errors',false,'login_form');
+		new Route('login','login','errors',false,'login_form').save();
 		
 		//Logout
-		addRoute('logout','logout','body',false,false);
+		new Route('logout','logout','body',false,false).save();
 		
 	}
 	
