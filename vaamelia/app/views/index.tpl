@@ -103,8 +103,14 @@
 		}
 	}
 	
-	function exec(url,user_function,validate_function,id_element,id_form) 
+	function exec(route) 
 	{
+		
+		var url = route.url;
+		var user_function = route.user_function;
+		var validate_function = route.validate_function;
+		var id_element = route.id_element;
+		var id_form = route.id_form;
 		
 		var b;
 		try { b = validate_function(); } catch(err) { b = false; }
@@ -156,14 +162,7 @@
 		
 			var route = routes[index];
 	
-			exec
-			(
-				route.url,
-				route.user_function,
-				route.validate_function,
-				route.id_element,
-				route.id_form
-			);
+			exec(route);
 			
 		}
 		
@@ -173,17 +172,26 @@
 	
 	function addRoute(index,action,element,valid,form,mini = element) {
 		
-		var u = full_url + action + '?sid=' + sid + '&mini=' + mini +'&ajax';
-		var f = new Function(index+'()');
+		//var u = full_url + action + '?sid=' + sid + '&mini=' + mini +'&ajax';
+		//var f = new Function(index+'()');
 		
-		v = valid ? new Function('validate_' + index + '()') : new Function('return true;');
+		this.user_function = new Function(index+'()');
+		this.validate_function = valid ? new Function('validate_' + index + '()') : new Function('return true;');
+		this.element = element;
+		this.form = form;
+		this.mini = mini;
+		this.action = action;
+		
+		this.url = full_url + this.action + '?sid=' + sid + '&mini=' + this.mini +'&ajax';
+		
+		//v = valid ? new Function('validate_' + index + '()') : new Function('return true;');
 		
 		var route = {
-			url: u,
-			user_function: f,
-			validate_function: v,
-			id_element: element,
-			id_form: form
+			url: this.url, //u
+			user_function: this.user_function, //f
+			validate_function: this.validate_function, //v
+			id_element: this.element, //element
+			id_form: this.form //form
 		};
 		
 		routes[index] = route;

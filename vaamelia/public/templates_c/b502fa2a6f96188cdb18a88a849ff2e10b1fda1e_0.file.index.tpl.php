@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-05-18 22:55:09
+/* Smarty version 3.1.33, created on 2019-05-24 18:20:41
   from 'G:\Programs\xampp\htdocs\myProjects\SWTracker\vaamelia\app\views\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5ce0712d1d72e4_85475602',
+  'unifunc' => 'content_5ce819d97b0f57_48371916',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b502fa2a6f96188cdb18a88a849ff2e10b1fda1e' => 
     array (
       0 => 'G:\\Programs\\xampp\\htdocs\\myProjects\\SWTracker\\vaamelia\\app\\views\\index.tpl',
-      1 => 1558212903,
+      1 => 1558714838,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ce0712d1d72e4_85475602 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ce819d97b0f57_48371916 (Smarty_Internal_Template $_smarty_tpl) {
 ?><hmtl>
 
 	<head>
@@ -130,8 +130,14 @@ _show';
 		}
 	}
 	
-	function exec(url,user_function,validate_function,id_element,id_form) 
+	function exec(route) 
 	{
+		
+		var url = route.url;
+		var user_function = route.user_function;
+		var validate_function = route.validate_function;
+		var id_element = route.id_element;
+		var id_form = route.id_form;
 		
 		var b;
 		try { b = validate_function(); } catch(err) { b = false; }
@@ -183,14 +189,7 @@ _show';
 		
 			var route = routes[index];
 	
-			exec
-			(
-				route.url,
-				route.user_function,
-				route.validate_function,
-				route.id_element,
-				route.id_form
-			);
+			exec(route);
 			
 		}
 		
@@ -200,17 +199,26 @@ _show';
 	
 	function addRoute(index,action,element,valid,form,mini = element) {
 		
-		var u = full_url + action + '?sid=' + sid + '&mini=' + mini +'&ajax';
-		var f = new Function(index+'()');
+		//var u = full_url + action + '?sid=' + sid + '&mini=' + mini +'&ajax';
+		//var f = new Function(index+'()');
 		
-		v = valid ? new Function('validate_' + index + '()') : new Function('return true;');
+		this.user_function = new Function(index+'()');
+		this.validate_function = valid ? new Function('validate_' + index + '()') : new Function('return true;');
+		this.element = element;
+		this.form = form;
+		this.mini = mini;
+		this.action = action;
+		
+		this.url = full_url + this.action + '?sid=' + sid + '&mini=' + this.mini +'&ajax';
+		
+		//v = valid ? new Function('validate_' + index + '()') : new Function('return true;');
 		
 		var route = {
-			url: u,
-			user_function: f,
-			validate_function: v,
-			id_element: element,
-			id_form: form
+			url: this.url, //u
+			user_function: this.user_function, //f
+			validate_function: this.validate_function, //v
+			id_element: this.element, //element
+			id_form: this.form //form
 		};
 		
 		routes[index] = route;
