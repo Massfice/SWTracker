@@ -3,22 +3,19 @@ function exec(route)
 		
 	var url = route.url;
 	var user_function = route.user_function;
-	var validate_function = route.validate_function;
+	var confirm_function = route.confirm_function;
 	var id_element = route.id_element;
 	var id_form = route.id_form;
 	var show = route.show;
 		
-	var b;
-	try { b = validate_function(); } catch(err) { b = false; }
-		
-	if(b) {
+	if(confirm_function()) {
 		var formData = '';
 		if(id_form) {
 			var form = document.getElementById(id_form);
 			var formData = new FormData(form); 
 		}
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.onreadystatechange = function() {
+		xmlHttp.onreadystatechange = async function() {
 			if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 					
 				var response = xmlHttp.responseText;
@@ -28,7 +25,10 @@ function exec(route)
 					
 				response = response.substr(1);
 					
-				if(id_element) show(response,user_function,id_element);
+				if(id_element) show(response,id_element);
+				if(await on_exist('data')) {
+					try { user_function(); } catch(err) {}
+				}
 			}
 		}
 		xmlHttp.open("POST", url, true); 

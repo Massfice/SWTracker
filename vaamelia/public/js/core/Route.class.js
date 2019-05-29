@@ -15,12 +15,11 @@ function Route(name,action) {
 	this.setConfirm = function(set) {
 			
 		if(set && typeof set === 'string')
-			this.validate_function = function() { return window.confirm(set); };
+			this.confirm_function = function() { return window.confirm(set); };
 		else if(set)
-			this.validate_function = function() { return window.confirm('Czy na pewno chcesz to zrobić?'); };
+			this.confirm_function = function() { return window.confirm('Czy na pewno chcesz to zrobić?'); };
 		else
-			this.validate_function = function() { return true; };
-			
+			this.confirm_function = function() { return true; };
 		return this;		
 	};
 		

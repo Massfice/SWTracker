@@ -4,6 +4,7 @@
 	
 		<title>SW Helper</title>
 		
+		<script 'text/javascript' src = '{$conf->app_root}/js/core/on_exist.js'></script>
 		<script 'text/javascript' src = '{$conf->app_root}/js/core/getVar.js'></script>
 		
 		<script type = 'text/javascript' src = '{$conf->app_root}/js/usage/funcs.js'></script>

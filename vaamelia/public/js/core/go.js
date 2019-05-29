@@ -1,7 +1,6 @@
 function go(index) {
 		
 	if('data' in window) document.getElementById('data').outerHTML = '';
-		
 	if(!(index in routes)) {
 			
 		if(default_index in routes) {
@@ -13,7 +12,6 @@ function go(index) {
 	}
 		
 	if(index != '') {
-		
 		var route = routes[index];
 	
 		exec(route);

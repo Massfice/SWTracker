@@ -1,4 +1,4 @@
 function initialize() {
 	routing();
-	go(action);
+	go(default_name);
 }
