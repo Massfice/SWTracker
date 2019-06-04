@@ -27,7 +27,7 @@ function Route(name,action) {
 		if(set && typeof set === 'function') this.show = set;
 		else this.show = do_magic;
 		return this;
-	}
+	};
 		
 	this.setElement = function(set) {
 		this.id_element = set;
@@ -48,7 +48,7 @@ function Route(name,action) {
 	this.makeDefault = function() {
 		this.default = true;
 		return this;
-	}
+	};
 		
 	this.save = function() {
 			

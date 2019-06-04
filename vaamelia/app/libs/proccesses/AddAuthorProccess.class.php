@@ -2,6 +2,8 @@
 
 namespace app\libs\proccesses;
 
+use core\App;
+
 abstract class AddAuthorProccess extends AuthorProccess {
 	
 	protected function proccess() {

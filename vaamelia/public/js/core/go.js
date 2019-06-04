@@ -1,6 +1,7 @@
 function go(index) {
 		
-	if('data' in window) document.getElementById('data').outerHTML = '';
+	if('data' in window) document.getElementById('data').outerHTML = ''; //Jeżeli element nie równa się 'data'
+	//usuwanie end
 	if(!(index in routes)) {
 			
 		if(default_index in routes) {
