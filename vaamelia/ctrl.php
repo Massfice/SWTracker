@@ -1,11 +1,10 @@
 <?php
 require_once 'init.php';
+require_once 'vaamelia_core/vaamelia_start.php';
+require_once 'vaamelia_usage/vaamelia_init.php';
 
 use core\App;
-use core\ParamUtils;
-use core\RoleUtils;
 use core\SessionUtils;
-use app\libs\usage\ExtendedConfig;
 
 // Witamy we frameworku Amelia !
 // Framework zamyka ostatecznie wszystko to, co było wprowadzone do tej pory, dodatkowo wprowadzając ułatwienia i rozszerzenia.
@@ -58,38 +57,13 @@ use app\libs\usage\ExtendedConfig;
 //    pozwala dodać użytkownikowi do silnika Smarty dane, które zawsze będą mu potrzebne po stronie widoku, jak np. obiekt 'user'. Natomiast skrypt
 //    'onload_db.php' pozwala wykonać jakieś działania bezpośrednio po poprawnym połączeniu z bazą danych.
 
-//Sprawdzanie logowania z ciasteczka
+//Funkcja użytkownika
 
-$user = ParamUtils::getFromCookies('SWHelper');
-
-if(isset($user) && ParamUtils::getFromCleanURL(0) != 'logout') {
-	RoleUtils::addRole('user');
-	$user = unserialize($user);
-	SessionUtils::storeObject('user',$user);
-	$cookie = TRUE;
-	if(!isset($_SESSION['SWHelper_cookie'])) SessionUtils::storeObject('SWHelper_cookie',$cookie);
-}
+vaamelia_init();
 
 //Wczytywanie index.tpl (lub nie)
 
-$full_url = ExtendedConfig::getInstance()->getExtended()['full_url'];
-App::getSmarty()->assign('full_url',$full_url);
-
-if(!(isset($_GET['ajax']) && !(bool)$_GET['ajax'])) {
-	
-	SessionUtils::store('prev','app\\libs\\containers\\ThreeTemplateContainer');
-	
-	$action = ParamUtils::getFromCleanURL(0);
-	
-	//Ładowanie widkou
-	
-	App::getSmarty()->assign('sid', session_id());
-	
-	App::getSmarty()->assign('action',$action);
-	
-	App::getSmarty()->display('index.tpl');
-	exit();
-}
+vaamelia_start();
 
 //konfiguracja routingu przeniesiona do dedykowanego skryptu
 require_once 'routing.php';

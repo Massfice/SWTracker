@@ -14,7 +14,7 @@ var waiting = function() {
 			
 			buff = '<center>' + buff + '</center><br>';
 			
-			document.getElementById('waiting').innerHTML = buff;
+			if(document.getElementById('waiting')) document.getElementById('waiting').innerHTML = buff;
 			
 			i = (i + 1) % 5;
 			
@@ -25,7 +25,7 @@ var waiting = function() {
 	
 	this.stop = function() {
 		
-		document.getElementById('waiting').innerHTML = '<br><br>';
+		if(document.getElementById('waiting')) document.getElementById('waiting').innerHTML = '<br><br>';
 		clearTimeout(this.wait);
 		
 	};

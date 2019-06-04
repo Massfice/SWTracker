@@ -6,7 +6,7 @@ function do_magic(response,id_element,buff = '',i = 0,show = true) {
 		if(c == '<') show = false;
 		if(c == '>') show = true;
 			
-		if(show) document.getElementById(id_element).innerHTML = buff;
+		if(document.getElementById(id_element) && show) document.getElementById(id_element).innerHTML = buff;
 			
 		i++;
 		if(i < response.length) do_magic(response,id_element,buff,i,show);
@@ -14,5 +14,5 @@ function do_magic(response,id_element,buff = '',i = 0,show = true) {
 }
 	
 function pure_show(response,id_element) {
-	if(id_element) document.getElementById(id_element).innerHTML = response;
+	if(document.getElementById(id_element)) document.getElementById(id_element).innerHTML = response;
 }

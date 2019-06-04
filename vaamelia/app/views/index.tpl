@@ -2,7 +2,7 @@
 
 	<head>
 	
-		<title>SW Helper</title>
+		{include 'usage/head.tpl'}
 		
 		<script 'text/javascript' src = '{$conf->app_root}/js/core/on_exist.js'></script>
 		<script 'text/javascript' src = '{$conf->app_root}/js/core/getVar.js'></script>
@@ -20,6 +20,7 @@
 		</script>
 		
 		<script type = 'text/javascript' src = '{$conf->app_root}/js/core/consts.js'></script>
+		<script type = 'text/javascript' src = '{$conf->app_root}/js/core/route_settings.js'></script>
 		<script type = 'text/javascript' src = '{$conf->app_root}/js/core/Route.class.js'></script>
 		<script type = 'text/javascript' src = '{$conf->app_root}/js/usage/routing.js'></script>
 		<script type = 'text/javascript' src = '{$conf->app_root}/js/core/exec.js'></script>
@@ -29,12 +30,13 @@
 	</head>
 	
 	<body onload = 'initialize()'>
-		<x id = 'waiting'><br><br></x>
+		{include 'usage/body_up.tpl'}
 		<x id = '0'>
 		
 		
 		
 		</x>
+		{include 'usage/body_down.tpl'}
 	</body>
 
 </html>

@@ -76,6 +76,6 @@ function Route(name,action) {
 	};
 		
 	this.setFunction(false).setConfirm(false).setElement('page').setForm(false)
-	.setShow(false).setStartFunction(false).setEndFunction(false);
+	.setShow(rsetting.show).setStartFunction(rsetting.start_function).setEndFunction(rsetting.end_function);
 		
 }
