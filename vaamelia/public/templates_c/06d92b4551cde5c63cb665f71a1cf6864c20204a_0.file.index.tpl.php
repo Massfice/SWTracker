@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-06-04 15:50:30
+/* Smarty version 3.1.33, created on 2019-06-04 18:20:55
   from 'G:\Programs\x\xampp\htdocs\myProjects\SWTracker\vaamelia\app\views\index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5cf6772637e050_49536744',
+  'unifunc' => 'content_5cf69a6713d8c4_55503158',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '06d92b4551cde5c63cb665f71a1cf6864c20204a' => 
     array (
       0 => 'G:\\Programs\\x\\xampp\\htdocs\\myProjects\\SWTracker\\vaamelia\\app\\views\\index.tpl',
-      1 => 1559638614,
+      1 => 1559665251,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cf6772637e050_49536744 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cf69a6713d8c4_55503158 (Smarty_Internal_Template $_smarty_tpl) {
 ?><hmtl>
 
 	<head>
@@ -35,10 +35,18 @@ function content_5cf6772637e050_49536744 (Smarty_Internal_Template $_smarty_tpl)
  'text/javascript' src = '<?php echo $_smarty_tpl->tpl_vars['conf']->value->app_root;?>
 /js/core/getVar.js'><?php echo '</script'; ?>
 >
+		<?php echo '<script'; ?>
+ 'text/javascript' src = '<?php echo $_smarty_tpl->tpl_vars['conf']->value->app_root;?>
+/js/core/waiting.js'><?php echo '</script'; ?>
+>
 		
 		<?php echo '<script'; ?>
  type = 'text/javascript' src = '<?php echo $_smarty_tpl->tpl_vars['conf']->value->app_root;?>
 /js/usage/funcs.js'><?php echo '</script'; ?>
+>
+		<?php echo '<script'; ?>
+ type = 'text/javascript' src = '<?php echo $_smarty_tpl->tpl_vars['conf']->value->app_root;?>
+/js/usage/init.js'><?php echo '</script'; ?>
 >
 		<?php echo '<script'; ?>
  type = 'text/javascript' src = '<?php echo $_smarty_tpl->tpl_vars['conf']->value->app_root;?>
@@ -88,6 +96,7 @@ function content_5cf6772637e050_49536744 (Smarty_Internal_Template $_smarty_tpl)
 	</head>
 	
 	<body onload = 'initialize()'>
+		<x id = 'waiting'><br><br></x>
 		<x id = '0'>
 		
 		

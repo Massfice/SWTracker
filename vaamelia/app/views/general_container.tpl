@@ -1,3 +1,4 @@
 {$ajax_info}
-<input type = 'hidden' value ='{if isset($vars)}{$vars}{/if}' id = 'data' style = 'display: inline;'>
-{include $container}
+{include 'minis/data.tpl'}
+{if $container != 'minis/data.tpl'}{include $container}{/if}
+<x id = 'end'></x>

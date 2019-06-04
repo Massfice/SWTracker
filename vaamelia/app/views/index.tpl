@@ -6,8 +6,10 @@
 		
 		<script 'text/javascript' src = '{$conf->app_root}/js/core/on_exist.js'></script>
 		<script 'text/javascript' src = '{$conf->app_root}/js/core/getVar.js'></script>
+		<script 'text/javascript' src = '{$conf->app_root}/js/core/waiting.js'></script>
 		
 		<script type = 'text/javascript' src = '{$conf->app_root}/js/usage/funcs.js'></script>
+		<script type = 'text/javascript' src = '{$conf->app_root}/js/usage/init.js'></script>
 		<script type = 'text/javascript' src = '{$conf->app_root}/js/core/default_show_funcs.js'></script>
 		<script type = 'text/javascript' src = '{$conf->app_root}/js/usage/show_funcs.js'></script>
 		
@@ -27,6 +29,7 @@
 	</head>
 	
 	<body onload = 'initialize()'>
+		<x id = 'waiting'><br><br></x>
 		<x id = '0'>
 		
 		

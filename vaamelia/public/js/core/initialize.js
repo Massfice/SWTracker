@@ -1,5 +1,5 @@
 function initialize() {
 	routing();
-	//usage init();
+	init();
 	go(default_name);
 }

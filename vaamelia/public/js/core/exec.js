@@ -3,12 +3,15 @@ function exec(route)
 		
 	var url = route.url;
 	var user_function = route.user_function;
+	var start_function = route.start_function;
+	var end_function = route.end_function;
 	var confirm_function = route.confirm_function;
 	var id_element = route.id_element;
 	var id_form = route.id_form;
 	var show = route.show;
 		
 	if(confirm_function()) {
+		try { start_function(); } catch(err) {}
 		var formData = '';
 		if(id_form) {
 			var form = document.getElementById(id_form);
@@ -28,6 +31,10 @@ function exec(route)
 				if(id_element) show(response,id_element);
 				if(await on_exist('data')) {
 					try { user_function(); } catch(err) {}
+				}
+				
+				if(await on_exist('end')) {
+					try { end_function(); } catch(err) {}
 				}
 			}
 		}

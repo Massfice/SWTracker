@@ -55,34 +55,32 @@
 		
 		private function initialize() {
 			
-			$rc = new \ReflectionClass($this);
-			$my_name = $rc->getName();
-			
-			$n1 = $this->getHierarchy($this);
-			$prev = SessionUtils::load('prev');
-			$n2 = $this->getHierarchy($prev);
-			
-			$n1 = \array_reverse($n1, FALSE);
-			$n2 = \array_reverse($n2, FALSE);
-			
-			$id = $this->getNewId($n1,$n2);
-			
-			if($id == -1) $id = count($n1);
-			
-			for($i = $id; $i < count($n1); $i++) {
-				$this->paths[$i] = $n1[$i];
-			}
-			
-			$this->extend_string = $id.'.tpl';
-			$this->ajax_info = $id;
-			SessionUtils::store('prev',$my_name);
-			
-			$buff = ParamUtils::getFromGET('mini');
-			$mini = $buff;
-			
-			if(self::$enable_mini && isset($mini) && $buff != 'body') {
+			$mini = ParamUtils::getFromGET('mini');
+			if(self::$enable_mini && isset($mini) && $mini != 'page') {
 				$this->extend_string = 'minis/'.$mini.'.tpl';
 				$this->ajax_info = 4;
+			} else {
+				$rc = new \ReflectionClass($this);
+				$my_name = $rc->getName();
+			
+				$n1 = $this->getHierarchy($this);
+				$prev = SessionUtils::load('prev');
+				$n2 = $this->getHierarchy($prev);
+			
+				$n1 = \array_reverse($n1, FALSE);
+				$n2 = \array_reverse($n2, FALSE);
+			
+				$id = $this->getNewId($n1,$n2);
+			
+				if($id == -1) $id = count($n1) + $id;
+			
+				for($i = $id; $i < count($n1); $i++) {
+					$this->paths[$i] = $n1[$i];
+				}
+			
+				$this->extend_string = $id.'.tpl';
+				$this->ajax_info = $id;
+				SessionUtils::store('prev',$my_name);
 			}
 		}
 		

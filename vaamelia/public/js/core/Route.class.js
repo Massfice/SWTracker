@@ -11,6 +11,22 @@ function Route(name,action) {
 			
 		return this;
 	};
+	
+	this.setStartFunction = function(set) {
+			
+		if(set && typeof set === 'function') this.start_function = set;
+		else this.start_function = function() {};
+			
+		return this;
+	};
+	
+	this.setEndFunction = function(set) {
+			
+		if(set && typeof set === 'function') this.end_function = set;
+		else this.end_function = function() {};
+			
+		return this;
+	};
 
 	this.setConfirm = function(set) {
 			
@@ -25,7 +41,7 @@ function Route(name,action) {
 		
 	this.setShow = function(set) {
 		if(set && typeof set === 'function') this.show = set;
-		else this.show = do_magic;
+		else this.show = pure_show;
 		return this;
 	};
 		
@@ -59,6 +75,7 @@ function Route(name,action) {
 		routes[this.name] = this;
 	};
 		
-	this.setFunction(false).setConfirm(false).setElement('body').setForm(false).setShow(false);
+	this.setFunction(false).setConfirm(false).setElement('page').setForm(false)
+	.setShow(false).setStartFunction(false).setEndFunction(false);
 		
 }
