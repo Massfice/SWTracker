@@ -1,7 +1,7 @@
-function exec(route) 
+function exec(route,url) 
 {
 		
-	var url = route.url;
+	//var url = route.url;
 	var user_function = route.user_function;
 	var start_function = route.start_function;
 	var end_function = route.end_function;

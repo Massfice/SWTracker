@@ -69,8 +69,6 @@ function Route(name,action) {
 	this.save = function() {
 			
 		if(this.default) default_index = this.name;
-			
-		this.url = full_url + this.action + '?sid=' + sid + '&mini=' + this.mini +'&ajax';
 
 		routes[this.name] = this;
 	};
