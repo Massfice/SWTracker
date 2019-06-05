@@ -3,10 +3,10 @@
 use core\ParamUtils;
 use core\SessionUtils;
 use core\RoleUtils;
-
+use app\libs\core\ElementTemplater\core\TemplateInfo;
 function vaamelia_init() {
+	
 	$user = ParamUtils::getFromCookies('SWHelper');
-
 	if(isset($user) && ParamUtils::getFromCleanURL(0) != 'logout') {
 		RoleUtils::addRole('user');
 		$user = unserialize($user);

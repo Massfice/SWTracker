@@ -1,4 +1,4 @@
-function go(index,addon = '?') {
+﻿function go(index,addon = '') {
 
 	//addon - używamy, gdy chcemy przekazać dodatkowe parametry za pomocą metody GET albo CleanURL
 	//dla CleanURL format jest następujący '/<clean_url_1>/<clean_url_1>/<clean_url_2>[/...]?'
@@ -22,6 +22,7 @@ function go(index,addon = '?') {
 		if(route.id_element != 'data' && 'data' in window) document.getElementById('data').outerHTML = '';
 		if('end' in window) document.getElementById('end').outerHTML = '';
 		
+		if(addon == '') addon = '?';
 		var url = full_url + route.action + addon + 'sid=' + sid + '&mini=' + route.mini +'&ajax';
 		
 		exec(route,url);		
