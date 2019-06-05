@@ -13,17 +13,17 @@ function vaamelia_start() {
 	$ajax = ParamUtils::getFromGet('ajax');
 	if(!(isset($ajax) && !(bool)$ajax)) {
 	
-		SessionUtils::store('prev','app\\libs\\containers\\ThreeTemplateContainer');
-	
+		SessionUtils::store('prev',FALSE);
+		
 		$action = ParamUtils::getFromCleanURL(0);
-	
-		//Ładowanie widkou
+		
+		//Ladowanie widoku
 	
 		App::getSmarty()->assign('sid', session_id());
 	
 		App::getSmarty()->assign('action',$action);
 	
-		App::getSmarty()->display('index.tpl');
+		App::getSmarty()->display('core/index.tpl');
 		exit();
 	}
 }

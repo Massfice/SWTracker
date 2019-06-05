@@ -41,7 +41,8 @@ class App {
         self::$router = new Router($config);
 
         //start session and load roles
-		if(isset($_GET['sid'])) session_id($_GET['sid']);
+		$sid = ParamUtils::getFromGet('sid');
+		if(isset($sid)) session_id($sid);
         session_start();
         self::$config->roles = isset($_SESSION['_amelia_roles']) ? unserialize($_SESSION['_amelia_roles']) : array();
 

@@ -12,7 +12,8 @@ function vaamelia_init() {
 		$user = unserialize($user);
 		SessionUtils::storeObject('user',$user);
 		$cookie = TRUE;
-		if(!isset($_SESSION['SWHelper_cookie'])) SessionUtils::storeObject('SWHelper_cookie',$cookie);
+		$session_cookie = SessionUtils::load('SWHelper_cookie',TRUE);
+		if(!isset($session_cookie)) SessionUtils::store('SWHelper_cookie',$cookie);
 	}
 }
 

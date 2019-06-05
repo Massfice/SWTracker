@@ -14,7 +14,7 @@ class AutologinProccess extends NonValidationProccess {
 		
 		$cookie = $this->params['lifetime'] > \time() ? TRUE : FALSE;
 		
-		$_SESSION['SWHelper_cookie'] = $cookie;
+		SessionUtils::store('SWHelper_cookie',$cookie);
 		
 	}
 	
