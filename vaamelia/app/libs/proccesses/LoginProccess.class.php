@@ -7,8 +7,8 @@ use core\Utils;
 use core\RoleUtils;
 use core\SessionUtils;
 
-use app\libs\usage\ExtendedConfig;
-use app\libs\usage\VarySender;
+use app\libs\core\ExtendedConfig;
+use app\libs\core\VarySender;
 use app\libs\containers\Container;
 
 class LoginProccess extends Proccess {

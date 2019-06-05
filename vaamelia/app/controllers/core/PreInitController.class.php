@@ -1,6 +1,6 @@
 <?php
 
-	namespace app\controllers;
+	namespace app\controllers\core;
 
 	abstract class PreInitController extends InitController {
 		

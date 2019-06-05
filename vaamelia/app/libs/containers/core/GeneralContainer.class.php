@@ -6,7 +6,7 @@
 	use core\ParamUtils;
 	use core\SessionUtils;
 	
-	use app\libs\usage\VarySender;
+	use app\libs\core\VarySender;
 
 	abstract class GeneralContainer {
 		

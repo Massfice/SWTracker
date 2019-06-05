@@ -5,8 +5,8 @@ namespace app\libs\proccesses;
 use core\App;
 use core\Utils;
 
-use app\libs\usage\ExtendedConfig;
-use app\libs\usage\VarySender;
+use app\libs\core\ExtendedConfig;
+use app\libs\core\VarySender;
 
 class RegisterProccess extends Proccess {
 	

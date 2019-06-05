@@ -6,7 +6,7 @@ use core\RoleUtils;
 use core\App;
 use core\SessionUtils;
 
-use app\libs\usage\VarySender;
+use app\libs\core\VarySender;
 
 class LogoutProccess extends NonValidationProccess {
 	

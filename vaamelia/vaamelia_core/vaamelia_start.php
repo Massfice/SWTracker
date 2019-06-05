@@ -3,7 +3,7 @@
 use core\App;
 use core\SessionUtils;
 use core\ParamUtils;
-use app\libs\usage\ExtendedConfig;
+use app\libs\core\ExtendedConfig;
 
 function vaamelia_start() {
 	$full_url = ExtendedConfig::getInstance()->getExtended()['full_url'];

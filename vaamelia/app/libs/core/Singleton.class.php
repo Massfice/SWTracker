@@ -1,6 +1,6 @@
 <?php
 
-namespace app\libs\usage;
+namespace app\libs\core;
 
 abstract class Singleton {
 	
