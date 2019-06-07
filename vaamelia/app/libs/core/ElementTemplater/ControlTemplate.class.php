@@ -2,6 +2,8 @@
 
 namespace app\libs\core\ElementTemplater;
 
+use app\libs\core\QuotesRefactor;
+
 class ControlTemplate implements Template {
 	
 	private $type;
@@ -17,15 +19,18 @@ class ControlTemplate implements Template {
 			default:
 			
 			case 'url':
-				$template = '<a href = "javascript:void(0);" onclick = "go(\'_index_\',\'_addon_\')">_name_</a>'; break;
+				$template = '<a href = {javascript:void(0);} onclick = {go({_index_},{_addon_})}>_name_</a>'; break;
 				
 			case 'submit':
-				$template = '<input type = "submit" value = "_name_" onclick = "go(\'_index_\',\'_addon_\')">'; break;
+				$template = '<input type = {submit} value = {_name_} onclick = {go({_index_},{_addon_})}>'; break;
 			
 			case 'button':
-				$template = '<input type = "button" value = "_name_" onclick = "go(\'_index_\',\'_addon_\')">'; break;
+				$template = '<input type = {button} value = {_name_} onclick = {go({_index_},{_addon_})}>'; break;
 			
 		}
+		
+		$refactor = new QuotesRefactor();
+		$template = $refactor->refactor($template);
 		
 		return new TemplateInfo($template,'_index_','_name_','_addon_');
 	}

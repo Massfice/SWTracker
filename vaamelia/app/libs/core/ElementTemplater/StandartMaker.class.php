@@ -2,7 +2,7 @@
 
 namespace app\libs\core\ElementTemplater;
 
-class StandardMaker implements ElementMaker {
+class StandartMaker implements ElementMaker {
 	
 	public function make(Template $template, array $vars) : Element {
 		
