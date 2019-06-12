@@ -4,5 +4,5 @@
 {$b}<br>
 {/foreach}
 {else}
-Nie ma.
+{$templater_babcia}
 {/if}

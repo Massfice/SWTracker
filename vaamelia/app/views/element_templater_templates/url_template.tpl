@@ -1,0 +1,1 @@
+<a href = 'javascript:void(0);' onclick = 'go("{$index}"{if isset($addon)},"{$addon}"{/if});'>{$name}</a>

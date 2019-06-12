@@ -11,21 +11,38 @@
 	use app\libs\core\ElementTemplater\ControlTemplate;
 	use app\libs\core\ElementTemplater\ArrayMaker;
 	use app\libs\core\ElementTemplater\ElementTemplater;
+	
+	use app\core\TemplaterFactory;
+	use app\core\ArrayRefactor;
 
 	abstract class Container extends GeneralContainer {
 		
 		protected function init() {
 			
-			$templater = new ElementTemplater();
-			$maker = new ArrayMaker();
-			$maker->setNames('b');
-			$template = new ControlTemplate('button');
+			//$templater = new ElementTemplater();
+			$templater = TemplaterFactory::createTemplater();
+			//$maker = new ArrayMaker();
+			$maker = TemplaterFactory::createArrayMaker('SmartyMaker');
+			//$maker->setNames('b');
+			//$template = new ControlTemplate('button');
+			//$template = TemplaterFactory::createTemplate('SmartyUrlTemplate');
+			$template = TemplaterFactory::createSmartyTemplate('url_template.tpl');
 			
 			$arr = [
 				'a' => ['login_show','Logowanie'],
-				'c' => ['register_show','Rejestracja'],
+				'b' => ['register_show','Rejestracja'],
 				['hello_show','Hello']
 			];
+			
+			$arr = ArrayRefactor::foreachReplaceKeys($arr,[
+				0 => 'index',
+				1 => 'name'
+			]);
+			
+			/*$arr = [
+				'index' => 'login_show',
+				'name' => 'Logowanie'
+			];*/
 			
 			$templater->register('babcia',$maker,$template,$arr);
 			
