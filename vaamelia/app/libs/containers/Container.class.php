@@ -13,7 +13,7 @@
 	use app\libs\core\ElementTemplater\ElementTemplater;
 	
 	use app\core\TemplaterFactory;
-	use app\core\ArrayRefactor;
+	use app\core\ArrayRefactor\ArrayRefactor;
 
 	abstract class Container extends GeneralContainer {
 		
@@ -34,15 +34,10 @@
 				['hello_show','Hello']
 			];
 			
-			$arr = ArrayRefactor::foreachReplaceKeys($arr,[
+			$arr = ArrayRefactor::refactor('RenameKeys',$arr,[
 				0 => 'index',
 				1 => 'name'
-			]);
-			
-			/*$arr = [
-				'index' => 'login_show',
-				'name' => 'Logowanie'
-			];*/
+			],'multi');
 			
 			$templater->register('babcia',$maker,$template,$arr);
 			
