@@ -16,8 +16,8 @@ class Multi extends Single {
 	}
 	
 	public function __construct() {
-		$this->spd = [];
-		$this->reverse = true;
+		$this->select(new \app\core\ArrayRefactor\Selectors\Blank());
+		$this->reverse(true);
 	}
 	
 	public function refactor(\app\core\ArrayRefactor\Methods\ArrayRefactorMethod $method, array $array, array $args) : array {
@@ -33,11 +33,11 @@ class Multi extends Single {
 		return $r_array;
 	}
 	
-	public function setSpd(array $spd) {
-		$this->spd = $spd;
+	public function select(\app\core\ArrayRefactor\Selectors\ArraySelector $selector) {
+		$this->spd = $selector->select();
 	}
 	
-	public function setReverse(bool $reverse) {
+	public function reverse(bool $reverse) {
 		$this->reverse = $reverse;
 	}
 	

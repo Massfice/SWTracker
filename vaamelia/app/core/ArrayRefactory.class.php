@@ -24,6 +24,14 @@ class ArrayRefactory {
 		
 	}
 	
+	public static function createSelector(string $selector) : \app\core\ArrayRefactor\Selectors\ArraySelector {
+		
+		$selector_name = '\\app\\core\\ArrayRefactor\\Selectors\\'.$selector;
+		
+		return new $selector_name();
+		
+	}
+	
 }
 
 ?>

@@ -15,6 +15,7 @@
 	use app\core\TemplaterFactory;
 	use app\core\ArrayRefactor\ArrayRefactor;
 	use app\core\ArrayRefactory;
+	use app\core\ArrayRefactorFacade;
 
 	abstract class Container extends GeneralContainer {
 		
@@ -44,7 +45,12 @@
 			$mode = ArrayRefactory::createMode('Multi');
 			$method = ArrayRefactory::createMethod('RenameKeys');
 			
-			$arr = $refactor->refactor($mode,$method,$arr,[
+			/*$arr = $refactor->refactor($mode,$method,$arr,[
+				0 => 'index',
+				1 => 'name'
+			]);*/
+			
+			$arr = ArrayRefactorFacade::multiRefactor('RenameKeys',$arr,[
 				0 => 'index',
 				1 => 'name'
 			]);
