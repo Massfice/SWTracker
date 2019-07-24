@@ -14,6 +14,7 @@
 	
 	use app\core\TemplaterFactory;
 	use app\core\ArrayRefactor\ArrayRefactor;
+	use app\core\ArrayRefactory;
 
 	abstract class Container extends GeneralContainer {
 		
@@ -34,10 +35,19 @@
 				['hello_show','Hello']
 			];
 			
-			$arr = ArrayRefactor::refactor('RenameKeys',$arr,[
+			/*$arr = ArrayRefactor::refactor('RenameKeys',$arr,[
 				0 => 'index',
 				1 => 'name'
-			],'multi');
+			],'multi');*/
+			
+			$refactor = ArrayRefactory::createRefactor();
+			$mode = ArrayRefactory::createMode('Multi');
+			$method = ArrayRefactory::createMethod('RenameKeys');
+			
+			$arr = $refactor->refactor($mode,$method,$arr,[
+				0 => 'index',
+				1 => 'name'
+			]);
 			
 			$templater->register('babcia',$maker,$template,$arr);
 			
