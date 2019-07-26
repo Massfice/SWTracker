@@ -30,8 +30,30 @@
 			//$template = TemplaterFactory::createTemplate('SmartyUrlTemplate');
 			$template = TemplaterFactory::createSmartyTemplate('url_template.tpl');
 			
+			$checker = ArrayRefactory::createChecker();
+			
+			$abc = ['ac' => 0, 'bs' => 1, 'c' => 2];
+			
+			$b = $checker->check($abc,[
+				'OR' => [
+					'AND' => [
+						'KeysExist' => [
+							'args' => ['a','c']
+						],
+						'KeysExist' => [
+						'args' => ['b']
+						]
+					],
+					'KeysExist' => [
+						'args' => ['c']
+					]
+				]
+			]);
+			
+			$cos = $b ? 'True' : 'False';
+			
 			$arr = [
-				'a' => ['login_show','Logowanie'],
+				'a' => ['login_show',$cos],
 				'b' => ['register_show','Rejestracja'],
 				['hello_show','Hello']
 			];

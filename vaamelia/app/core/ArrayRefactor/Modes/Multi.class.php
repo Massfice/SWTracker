@@ -4,8 +4,8 @@ namespace app\core\ArrayRefactor\Modes;
 
 class Multi extends Single {
 	
-	private $spd;
-	private $reverse;
+	protected $selected;
+	protected $reverse;
 	
 	private static function isInside($value, array $array) : bool {
 		foreach($array as $a) {
@@ -16,14 +16,15 @@ class Multi extends Single {
 	}
 	
 	public function __construct() {
-		$this->select(new \app\core\ArrayRefactor\Selectors\Blank());
+		$selector = \app\core\ArrayRefactory::createSelector('Blank');
+		$this->select($selector);
 		$this->reverse(true);
 	}
 	
 	public function refactor(\app\core\ArrayRefactor\Methods\ArrayRefactorMethod $method, array $array, array $args) : array {
 		
 		foreach($array as $key => $item) {
-			$b = $this->isInside($key,$this->spd);
+			$b = $this->isInside($key,$this->selected);
 			if(($b && !$this->reverse) || (!$b && $this->reverse))
 				$r_array[$key] = parent::refactor($method,$item,$args);
 			else
@@ -34,7 +35,7 @@ class Multi extends Single {
 	}
 	
 	public function select(\app\core\ArrayRefactor\Selectors\ArraySelector $selector) {
-		$this->spd = $selector->select();
+		$this->selected = $selector->select();
 	}
 	
 	public function reverse(bool $reverse) {
