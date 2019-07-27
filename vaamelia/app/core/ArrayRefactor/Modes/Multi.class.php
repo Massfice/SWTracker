@@ -2,7 +2,7 @@
 
 namespace app\core\ArrayRefactor\Modes;
 
-class Multi extends Single {
+class Multi implements ArrayRefactorMode {
 	
 	protected $selected;
 	protected $reverse;
@@ -25,8 +25,10 @@ class Multi extends Single {
 		
 		foreach($array as $key => $item) {
 			$b = $this->isInside($key,$this->selected);
-			if(($b && !$this->reverse) || (!$b && $this->reverse))
-				$r_array[$key] = parent::refactor($method,$item,$args);
+			if(($b && !$this->reverse) || (!$b && $this->reverse)) {
+				$refactor = new Single();
+				$r_array[$key] = $refactor->refactor($method,$item,$args);
+			}
 			else
 				$r_array[$key] = $item;
 		}

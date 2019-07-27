@@ -8,7 +8,7 @@ class KeysExist implements ArrayCheckerMethod {
 		
 		foreach($args as $a) {
 			
-			if( !( is_string( $a ) && isset( $array[$a] ) ) ) return false;
+			if(!((is_string($a) || is_numeric($a)) && isset($array[$a]))) return false;
 			
 		}
 		

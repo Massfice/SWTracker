@@ -34,7 +34,7 @@
 			
 			$abc = ['ac' => 0, 'bs' => 1, 'c' => 2];
 			
-			$b = $checker->check($abc,[
+			/*$b = $checker->check($abc,[
 				'OR' => [
 					'AND' => [
 						'KeysExist' => [
@@ -50,13 +50,16 @@
 				]
 			]);
 			
-			$cos = $b ? 'True' : 'False';
+			$cos = $b ? 'True' : 'False';*/
 			
 			$arr = [
-				'a' => ['login_show',$cos],
-				'b' => ['register_show','Rejestracja'],
-				['hello_show','Hello']
+				'a' => ['b' => 1, 'login_show','Logowanie'],
+				'b' => ['a' => 1,'c' => 1,'register_show','Rejestracja'],
+				['hello_show','Hello'],
+				2,1
 			];
+			
+			$arr = ArrayRefactorFacade::filterRefactor($arr)['Correct'];
 			
 			/*$arr = ArrayRefactor::refactor('RenameKeys',$arr,[
 				0 => 'index',
@@ -72,10 +75,24 @@
 				1 => 'name'
 			]);*/
 			
-			$arr = ArrayRefactorFacade::multiRefactor('RenameKeys',$arr,[
+			/*$arr = ArrayRefactorFacade::multiRefactor('RenameKeys',$arr,[
 				0 => 'index',
 				1 => 'name'
-			]);
+			]);*/
+			
+			$arr = ArrayRefactorFacade::condRefactor('RenameKeys',$arr,['AlwaysTrue' => []],[
+				0 => 'index',
+				1 => 'name'
+			],false);
+			
+			/*$arr = ArrayRefactorFacade::condRefactor('RenameKeys',$arr,[
+				'KeysExist' => [
+					'args' => ['a']
+				]
+			],[
+				0 => 'index',
+				1 => 'name'
+			]);*/
 			
 			$templater->register('babcia',$maker,$template,$arr);
 			

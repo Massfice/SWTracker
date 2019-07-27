@@ -32,6 +32,8 @@ class ArrayChecker {
 	
 	private function proccessor(array $array, array $pattern, string $method) : bool {
 		
+		$method = \explode('#',$method)[0];
+		
 		switch($method) {
 			
 			case 'AND':
