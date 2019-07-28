@@ -23,8 +23,11 @@ class Multi implements ArrayRefactorMode {
 	
 	public function refactor(\app\core\ArrayRefactor\Methods\ArrayRefactorMethod $method, array $array, array $args) : array {
 		
+		$cmethod = \app\core\ArrayRefactory::createCheckerMethod('ValuesExist');
+		
 		foreach($array as $key => $item) {
-			$b = $this->isInside($key,$this->selected);
+			//$b = $this->isInside($key,$this->selected);
+			$b = $cmethod->check($this->selected,[$key]);
 			if(($b && !$this->reverse) || (!$b && $this->reverse)) {
 				$refactor = new Single();
 				$r_array[$key] = $refactor->refactor($method,$item,$args);

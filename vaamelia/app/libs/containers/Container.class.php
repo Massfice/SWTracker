@@ -56,11 +56,12 @@
 				'a' => ['b' => 1, 'login_show','Logowanie'],
 				'b' => ['a' => 1,'c' => 1,'register_show','Rejestracja'],
 				['hello_show','Hello'],
-				2,1
+				2,1,3
 			];
 			
 			$arr = ArrayRefactorFacade::filterRefactor($arr)['Correct'];
-			
+			/*$cmethod = ArrayRefactory::createCheckerMethod('ValuesExist');
+			var_dump($cmethod->check($arr,[2,1,3]));*/
 			/*$arr = ArrayRefactor::refactor('RenameKeys',$arr,[
 				0 => 'index',
 				1 => 'name'
