@@ -7,14 +7,6 @@ class Multi implements ArrayRefactorMode {
 	protected $selected;
 	protected $reverse;
 	
-	private static function isInside($value, array $array) : bool {
-		foreach($array as $a) {
-			if($value === $a) return true;
-		}
-		
-		return false;
-	}
-	
 	public function __construct() {
 		$selector = \app\core\ArrayRefactory::createSelector('Blank');
 		$this->select($selector);
